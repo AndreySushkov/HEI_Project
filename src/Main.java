@@ -15,14 +15,16 @@ public class Main {
                     "4) Добавить курс в БД\n" +
                     "5) Удалить курс из БД\n" +
                     "6) Редактировать курс в БД\n" +
-                    "7) Показать всех преподавателей\n" +
-                    "8) Показать все курсы\n" +
-                    "9) Показать всех преподавателей и их курсы\n" +
-                    "10) Добавить курс преподавателю\n" +
-                    "11) Удалить курс у преподавателя\n" +
+                    "7) Добавить курс преподавателю\n" +
+                    "8) Удалить курс у преподавателя\n" +
+                    "9) Показать всех преподавателей\n" +
+                    "10) Показать все курсы\n" +
+                    "11) Показать всех преподавателей и их курсы\n" +
                     "0) Выход из программы");
             choice = scanner.nextInt();
 
+            Teacher teacher;
+            Course course;
             switch (choice) {
                 case 1:
                     teachers.addTeacher();
@@ -30,34 +32,68 @@ public class Main {
                 case 2:
                     teachers.removeTeacher();
                     break;
+                case 3:
+                    teachers.updateTeacher();
+                    break;
                 case 4:
                     courses.addCourse();
                     break;
                 case 5:
                     courses.removeCourse();
                     break;
+                case 6:
+                    courses.updateCourse();
+                    break;
                 case 7:
-                    teachers.showTeachers();
+                    if (!teachers.getTeachers().isEmpty()) {
+                        System.out.println("Какому преподавателю вы хотите дать курс (по id)");
+                        teacher = teachers.findTeacherById(scanner.nextInt());                      //Ввод преподавателя
+                        if (teacher == null) {
+                            System.out.println("Такого преподавателя нет");
+                            break;
+                        }
+                        System.out.println("Какой курс вы хотите дать преподавателю (по id)");
+                        course = courses.findCourseById(scanner.nextInt());                         //Ввод курса
+                        if (course == null) {
+                            System.out.println("Такого курса нет");
+                            break;
+                        }
+                        teacher.addCourseForTeacher(course);                                        //Добавление курса преподавателю
+                    } else {
+                        System.out.print("Преподавателей нет в БД (что тоже крайне странно)");
+                    }
                     break;
                 case 8:
-                    courses.showCourses();
+                    if (!teachers.getTeachers().isEmpty()) {
+                        System.out.println("У какого преподавателя вы хотите удалить курс (по id)");
+                        teacher = teachers.findTeacherById(scanner.nextInt());                      //Ввод преподавателя
+                        if (teacher == null) {
+                            System.out.println("Такого преподавателя нет");
+                            break;
+                        }
+                        if (!teacher.getCourses().isEmpty()) {
+                            System.out.println("Какой курс вы хотите удалить у преподавателя (по id)");
+                            course = courses.findCourseById(scanner.nextInt());                     //Ввод курса
+                            if (course == null) {
+                                System.out.println("Такого курса нет");
+                                break;
+                            }
+                            teacher.removeCourseForTeacher(course);                                 //Удаление курса у преподавателя
+                        } else {
+                            System.out.println("У этого преподавателя нет курсов (что странно)");
+                        }
+                    } else {
+                        System.out.print("Преподавателей нет в БД (что тоже крайне странно)");
+                    }
                     break;
                 case 9:
-                    teachers.showTeachersWithCourses();
+                    teachers.showTeachers();
                     break;
                 case 10:
-                    System.out.println("Какому преподавателю вы хотите дать курс (по id)");
-                    Teacher teacher = teachers.findTeacherById(scanner.nextInt());
-                    System.out.println("Какой курс вы хотите дать преподавателю (по id)");
-                    Course course = courses.findCourseById(scanner.nextInt());
-                    teacher.addCourseForTeacher(course);
+                    courses.showCourses();
                     break;
                 case 11:
-                    System.out.println("У какого реподавателя вы хотите удалить курс (по id)");
-                    teacher = teachers.findTeacherById(scanner.nextInt());
-                    System.out.println("Какой курс вы хотите удалить у преподавателя (по id)");
-                    course = courses.findCourseById(scanner.nextInt());
-                    teacher.removeCourseForTeacher(course);
+                    teachers.showTeachersWithCourses();
                     break;
             }
 

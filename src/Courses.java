@@ -17,8 +17,36 @@ public class Courses {
     }
 
     public void removeCourse() {
-        System.out.print("Какой курс вы хотите удалить из БД (по id): ");
-        courses.remove(findCourseById(scanner.nextInt()));
+        if (!courses.isEmpty()) {
+            System.out.print("Какой курс вы хотите удалить из БД (по id): ");
+            courses.remove(findCourseById(scanner.nextInt()));
+        } else {
+            System.out.println("Курсов нет в БД");
+        }
+    }
+
+    public void updateCourse() {
+        if (!courses.isEmpty()) {
+            System.out.print("Какой курс вы хотите изменить (по id): ");
+            Course course = findCourseById(scanner.nextInt());
+
+            System.out.println("Если вы не хотите менять поле, отсавьте его пустым");
+
+            System.out.print("Изменить название курса: ");
+            scanner.nextLine();                         //блокирует \n
+            String updatedTitle = scanner.nextLine();
+            if (!updatedTitle.equals("")) {
+                course.setTitle(updatedTitle);
+            }
+
+            System.out.print("Изменить количество часов: ");
+            String updatedNumberOfHours = scanner.nextLine();
+            if (!updatedNumberOfHours.equals("")) {
+                course.setNumberOfHours(Integer.parseInt(updatedNumberOfHours));
+            }
+        } else {
+            System.out.println("Курсов нет в БД");
+        }
     }
 
     public void showCourses() {

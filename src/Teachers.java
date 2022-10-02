@@ -17,8 +17,36 @@ public class Teachers {
     }
 
     public void removeTeacher() {
-        System.out.print("Какого преподавателя вы хотите удалить (по id): ");
-        teachers.remove(findTeacherById(scanner.nextInt()));
+        if (!teachers.isEmpty()) {
+            System.out.print("Какого преподавателя вы хотите удалить (по id): ");
+            teachers.remove(findTeacherById(scanner.nextInt()));
+        } else {
+            System.out.println("Преподавателей нет в БД");
+        }
+    }
+
+    public void updateTeacher() {
+        if (!teachers.isEmpty()) {
+            System.out.print("Какого преподавателя вы хотите изменить (по id): ");
+            Teacher teacher = findTeacherById(scanner.nextInt());
+
+            System.out.println("Если вы не хотите менять поле, отсавьте его пустым");
+
+            System.out.print("Изменить ФИО: ");
+            scanner.nextLine();                         //блокирует \n
+            String updatedFio = scanner.nextLine();
+            if (!updatedFio.equals("")) {
+                teacher.setFio(updatedFio);
+            }
+
+            System.out.print("Изменить возраст: ");
+            String updatedAge = scanner.nextLine();
+            if (!updatedAge.equals("")) {
+                teacher.setAge(Integer.parseInt(updatedAge));
+            }
+        } else {
+            System.out.println("Преподавателей нет в БД");
+        }
     }
 
     public void showTeachers() {

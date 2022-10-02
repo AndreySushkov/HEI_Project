@@ -16,9 +16,7 @@ public class Teacher {
         this.age = scanner.nextInt();
     }
 
-    public void addCourseForTeacher(Course course) {
-        courses.add(course);
-    }
+    public void addCourseForTeacher(Course course) {courses.add(course);}
 
     public void removeCourseForTeacher(Course course) {
         courses.remove(course);
