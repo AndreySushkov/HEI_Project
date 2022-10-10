@@ -1,20 +1,19 @@
 import java.util.Scanner;
 
-public class Course {
+public class Group {
     private int id;
     private String title;
-    private int numberOfHours;
+    private Course[] courses;
 
-    public Course(String title, int numberOfHours) {
+    public Group(String title) {
         this.title = title;
-        this.numberOfHours = numberOfHours;
     }
 
     public void setId(int id) {this.id = id;}
     public void setTitle(String title) {this.title = title;}
-    public void setNumberOfHours(int numberOfHours) {this.numberOfHours = numberOfHours;}
+    public void setCourses(Course[] courses) {this.courses = courses;}
 
     public int getId() {return this.id;}
     public String getTitle() {return this.title;}
-    public int getNumberOfHours() {return this.numberOfHours;}
+    public Course[] getCourses() {return this.courses;}
 }

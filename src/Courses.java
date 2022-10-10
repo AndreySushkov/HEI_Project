@@ -6,8 +6,8 @@ public class Courses {
 
     private Scanner scanner = new Scanner(System.in);
 
-    public void addCourse() {
-        Course newCourse = new Course();
+    public void addCourse(String title, int numberOfHours) {
+        Course newCourse = new Course(title, numberOfHours);
         if (courses.isEmpty()) {
             newCourse.setId(1);
         } else {
@@ -16,42 +16,22 @@ public class Courses {
         courses.add(newCourse);
     }
 
-    public void removeCourse() {
-        if (!courses.isEmpty()) {
-            System.out.print("Какой курс вы хотите удалить из БД (по id): ");
-            courses.remove(findCourseById(scanner.nextInt()));
-        } else {
-            System.out.println("Курсов нет в БД");
-        }
+    public void removeCourse(Course course) {
+        courses.remove(course);
     }
 
-    public void updateCourse() {
-        if (!courses.isEmpty()) {
-            System.out.print("Какой курс вы хотите изменить (по id): ");
-            Course course = findCourseById(scanner.nextInt());
-
-            System.out.println("Если вы не хотите менять поле, отсавьте его пустым");
-
-            System.out.print("Изменить название курса: ");
-            scanner.nextLine();                         //блокирует \n
-            String updatedTitle = scanner.nextLine();
-            if (!updatedTitle.equals("")) {
-                course.setTitle(updatedTitle);
-            }
-
-            System.out.print("Изменить количество часов: ");
-            String updatedNumberOfHours = scanner.nextLine();
-            if (!updatedNumberOfHours.equals("")) {
-                course.setNumberOfHours(Integer.parseInt(updatedNumberOfHours));
-            }
-        } else {
-            System.out.println("Курсов нет в БД");
+    public void updateCourse(Course updatedCourse, String updatedTitle, String updatedNumberOfHours) {
+        if (!updatedTitle.equals("")) {
+            updatedCourse.setTitle(updatedTitle);
+        }
+        if (!updatedNumberOfHours.equals("")) {
+            updatedCourse.setNumberOfHours(Integer.parseInt(updatedNumberOfHours));
         }
     }
 
     public void showCourses() {
         for (Course course : courses) {
-            System.out.println(course.getId() + " " + course.getTitle());
+            System.out.println(course.getId() + "\t" + course.getTitle());
         }
     }
 

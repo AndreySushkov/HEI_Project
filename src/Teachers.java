@@ -1,13 +1,10 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Teachers {
     private ArrayList<Teacher> teachers = new ArrayList<Teacher>();
 
-    private Scanner scanner = new Scanner(System.in);
-
-    public void addTeacher() {
-        Teacher newTeacher = new Teacher();
+    public void addTeacher(String fio, int yearOfBirth) {
+        Teacher newTeacher = new Teacher(fio, yearOfBirth);
         if (teachers.isEmpty()) {
             newTeacher.setId(1);
         } else {
@@ -16,50 +13,30 @@ public class Teachers {
         teachers.add(newTeacher);
     }
 
-    public void removeTeacher() {
-        if (!teachers.isEmpty()) {
-            System.out.print("Какого преподавателя вы хотите удалить (по id): ");
-            teachers.remove(findTeacherById(scanner.nextInt()));
-        } else {
-            System.out.println("Преподавателей нет в БД");
-        }
+    public void removeTeacher(Teacher teacher) {
+        teachers.remove(teacher);
     }
 
-    public void updateTeacher() {
-        if (!teachers.isEmpty()) {
-            System.out.print("Какого преподавателя вы хотите изменить (по id): ");
-            Teacher teacher = findTeacherById(scanner.nextInt());
-
-            System.out.println("Если вы не хотите менять поле, отсавьте его пустым");
-
-            System.out.print("Изменить ФИО: ");
-            scanner.nextLine();                         //блокирует \n
-            String updatedFio = scanner.nextLine();
-            if (!updatedFio.equals("")) {
-                teacher.setFio(updatedFio);
-            }
-
-            System.out.print("Изменить возраст: ");
-            String updatedAge = scanner.nextLine();
-            if (!updatedAge.equals("")) {
-                teacher.setAge(Integer.parseInt(updatedAge));
-            }
-        } else {
-            System.out.println("Преподавателей нет в БД");
+    public void updateTeacher(Teacher updatedTeacher, String updatedFio, String updatedYearOfBirth) {
+        if (!updatedFio.equals("")) {
+            updatedTeacher.setFio(updatedFio);
+        }
+        if (!updatedYearOfBirth.equals("")) {
+            updatedTeacher.setYearOfBirth(Integer.parseInt(updatedYearOfBirth));
         }
     }
 
     public void showTeachers() {
         for (Teacher teacher : teachers) {
-            System.out.println(teacher.getId() + " " + teacher.getFio());
+            System.out.println(teacher.getId() + "\t" + teacher.getFio());
         }
     }
 
     public void showTeachersWithCourses() {
         for (Teacher teacher : teachers) {
-            System.out.println(teacher.getId() + " " + teacher.getFio());
+            System.out.println(teacher.getId() + "\t" + teacher.getFio());
             for (Course course : teacher.getCourses()) {
-                System.out.println("\t" + course.getId() + " " + course.getTitle());
+                System.out.println("\t" + course.getId() + "\t" + course.getTitle());
             }
         }
     }
