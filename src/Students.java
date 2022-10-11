@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Students {
-    private ArrayList<Student> students = new ArrayList<Student>();
+    private ArrayList<Student> students = new ArrayList<>();
 
     public void addStudent(String fio, int yearOfBirth, int yearOfStudy) {
         Student newStudent = new Student(fio, yearOfBirth, yearOfStudy);

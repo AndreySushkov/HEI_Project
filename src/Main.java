@@ -1,14 +1,17 @@
-import java.sql.*;
 import java.util.Scanner;
-import java.sql.Connection;
 
 public class Main {
-    public static  void main(String[] args) throws SQLException, ClassNotFoundException {
-        Teachers teachers = new Teachers();
-        Students students = new Students();
-        Courses courses = new Courses();
-        Groups groups = new Groups();
+    public static Teachers teachers = new Teachers();
+    public static Students students = new Students();
+    public static Courses courses = new Courses();
+    public static Groups groups = new Groups();
 
+    public static  void main(String[] args) {
+        Test();
+        Menu();
+    }
+
+    public static void Menu() {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -24,6 +27,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
+                    //таблица преподавателей
                     do {
                         System.out.println("Выберите действие\n" +
                                 "1) Добавить преподавателя\n" +
@@ -120,6 +124,7 @@ public class Main {
                     choice = -1;
                     break;
                 case 2:
+                    //таблица курсов
                     do {
                         System.out.println("Выберите действие\n" +
                                 "1) Добавить курс\n" +
@@ -180,8 +185,100 @@ public class Main {
                     choice = -1;
                     break;
                 case 3:
+                    //таблица групп
+                    do {
+                        System.out.println("Выберите действие:\n" +
+                                "1) Добавить группу\n" +
+                                "2) Удалить группу\n" +
+                                "3) Редактировать группу\n" +
+                                "4) Добавить курс в группу\n" +
+                                "5) Удалить курс из группы\n" +
+                                "6) Показать все группы\n" +
+                                "7) показать все группы и их курсы\n" +
+                                "0) Выйти в главное меню");
+
+                        choice = scanner.nextInt();
+
+                        switch (choice) {
+                            case 1:
+                                //добавление новой группы в массив
+                                System.out.print("Введите название группы: ");
+                                scanner.nextLine();
+                                String title = scanner.nextLine();
+                                groups.addGroup(title);
+                                break;
+                            case 2:
+                                //удаление группы из массива
+                                if (!groups.getGroups().isEmpty()) {
+                                    System.out.print("Какую группу вы хотите удалить (по id): ");
+                                    groups.removeGroup(groups.findGroupById(scanner.nextInt()));
+                                } else {
+                                    System.out.println("В массиве нет групп");
+                                }
+                                break;
+                            case 3:
+                                //изменение одной из групп
+                                if (!groups.getGroups().isEmpty()) {
+                                    System.out.print("Какую группу вы хотите изменить (по id): ");
+                                    Group updatedGroup = groups.findGroupById(scanner.nextInt());
+
+                                    System.out.println("Если вы не хотите менять поле, отсавьте его пустым");
+
+                                    System.out.print("Изменить название группы: ");
+                                    scanner.nextLine();                         //блокирует \n
+                                    String updatedTitle = scanner.nextLine();
+
+                                    groups.updateGroup(updatedGroup, updatedTitle);
+                                } else {
+                                    System.out.println("Групп нет в массиве");
+                                }
+                                break;
+                            case 4:
+                                //добавление курса группе
+                                if (!groups.getGroups().isEmpty()) {
+                                    System.out.println("Какой группе вы хотите дать курс (по id)");
+                                    Group group = groups.findGroupById(scanner.nextInt());                      //Ввод группы
+                                    System.out.println("Какой курс вы хотите дать группе (по id)");
+                                    Course course = courses.findCourseById(scanner.nextInt());                         //Ввод курса
+
+                                    group.addCourseToGroup(course);                                        //Добавление курса группе
+                                } else {
+                                    System.out.print("Групп нет в массиве");
+                                }
+                                break;
+                            case 5:
+                                //удаление курса у группы
+                                if (!groups.getGroups().isEmpty()) {
+                                    System.out.println("У какой группы вы хотите удалить курс (по id)");
+                                    Group group = groups.findGroupById(scanner.nextInt());                      //Ввод преподавателя
+
+                                    if (!group.getCourses().isEmpty()) {
+                                        System.out.println("Какой курс вы хотите удалить у группы (по id)");
+                                        Course course = courses.findCourseById(scanner.nextInt());                     //Ввод курса
+                                        group.removeCourseToGroup(course);                                 //Удаление курса у преподавателя
+                                    } else {
+                                        System.out.println("У этой группы нет курсов");
+                                    }
+                                } else {
+                                    System.out.print("Групп нет в массиве");
+                                }
+                                break;
+                            case 6:
+                                //вывод всех групп
+                                groups.showGroups();
+                                break;
+                            case 7:
+                                //вывод всех групп и их курсы
+                                groups.showGroupsWithCourses();
+                                break;
+                        }
+
+                        System.out.println();
+                    } while (choice != 0);
+                    choice = -1;
                     break;
                 case 4:
+                    //таблица студентов
                     do {
                         System.out.println("Выберите действие\n" +
                                 "1) Добавить студента\n" +
@@ -265,5 +362,44 @@ public class Main {
 
             System.out.println();
         } while (choice != 0);
+    }
+
+    //Функция, предназначенная для тестов
+    public static void Test() {
+        teachers.addTeacher("Павлова Ирина Васильевна", 1972);
+        teachers.addTeacher("Петрова Елена Федоровна", 1978);
+        teachers.addTeacher("Иванова Катерина Захаровна", 1995);
+
+        courses.addCourse("Программирование", 12);
+        courses.addCourse("Информатика", 10);
+        courses.addCourse("Математика", 10);
+
+        teachers.findTeacherById(1).addCourseToTeacher(courses.findCourseById(1));
+        teachers.findTeacherById(1).addCourseToTeacher(courses.findCourseById(3));
+        teachers.findTeacherById(2).addCourseToTeacher(courses.findCourseById(2));
+        teachers.findTeacherById(3).addCourseToTeacher(courses.findCourseById(3));
+
+        students.addStudent("Миляев Андрей Викторович", 2004, 2);
+        students.addStudent("Хренов Михаил Васильевич", 2002, 4);
+        students.addStudent("Романов Иван Васильевич", 2000, 5);
+        students.addStudent("Добрынина Наталья Алексеевна", 2005, 1);
+        students.addStudent("Писцова Татьяна Михайловна", 2005, 1);
+
+        groups.addGroup("У-1");
+        groups.addGroup("У-2");
+        groups.addGroup("У-3");
+
+        groups.findGroupById(1).addCourseToGroup(courses.findCourseById(1));
+        groups.findGroupById(1).addCourseToGroup(courses.findCourseById(2));
+        groups.findGroupById(2).addCourseToGroup(courses.findCourseById(2));
+        groups.findGroupById(2).addCourseToGroup(courses.findCourseById(3));
+        groups.findGroupById(3).addCourseToGroup(courses.findCourseById(1));
+        groups.findGroupById(3).addCourseToGroup(courses.findCourseById(3));
+
+        students.findStudentById(1).setGroup(groups.findGroupById(1));
+        students.findStudentById(2).setGroup(groups.findGroupById(1));
+        students.findStudentById(5).setGroup(groups.findGroupById(1));
+        students.findStudentById(3).setGroup(groups.findGroupById(2));
+        students.findStudentById(4).setGroup(groups.findGroupById(2));
     }
 }

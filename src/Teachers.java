@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Teachers {
-    private ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+    private ArrayList<Teacher> teachers = new ArrayList<>();
 
     public void addTeacher(String fio, int yearOfBirth) {
         Teacher newTeacher = new Teacher(fio, yearOfBirth);
