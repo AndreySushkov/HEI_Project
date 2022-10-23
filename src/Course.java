@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Course {
     private int id;
     private String title;

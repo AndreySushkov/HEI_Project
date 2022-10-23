@@ -1,17 +1,14 @@
 import java.util.Scanner;
 
 public class Main {
-    public static Teachers teachers = new Teachers();
-    public static Students students = new Students();
-    public static Courses courses = new Courses();
-    public static Groups groups = new Groups();
+    final static DataBase dataBase = DataBase.getInstance();
 
     public static  void main(String[] args) {
         Test();
         Menu();
     }
 
-    public static void Menu() {
+    private static void Menu() {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -48,22 +45,22 @@ public class Main {
                                 String fio = scanner.nextLine();
                                 System.out.print("Введите год рождения преподавателя: ");
                                 int yearOfBirth = scanner.nextInt();
-                                teachers.addTeacher(fio, yearOfBirth);
+                                dataBase.addTeacher(fio, yearOfBirth);
                                 break;
                             case 2:
                                 //удаление преподавателя из массива
-                                if (!teachers.getTeachers().isEmpty()) {
+                                if (!dataBase.getTeachers().isEmpty()) {
                                     System.out.print("Какого преподавателя вы хотите удалить (по id): ");
-                                    teachers.removeTeacher(teachers.findTeacherById(scanner.nextInt()));
+                                    dataBase.removeTeacher(dataBase.findTeacherById(scanner.nextInt()));
                                 } else {
                                     System.out.println("В массиве нет преподавателей");
                                 }
                                 break;
                             case 3:
                                 //изменение одного из преподавателй
-                                if (!teachers.getTeachers().isEmpty()) {
+                                if (!dataBase.getTeachers().isEmpty()) {
                                     System.out.print("Какого преподавателя вы хотите изменить (по id): ");
-                                    Teacher updatedTeacher = teachers.findTeacherById(scanner.nextInt());
+                                    Teacher updatedTeacher = dataBase.findTeacherById(scanner.nextInt());
 
                                     System.out.println("Если вы не хотите менять поле, оставьте его пустым");
 
@@ -74,18 +71,18 @@ public class Main {
                                     System.out.print("Изменить возраст преподавателя: ");
                                     String updatedYearOfBirth = scanner.nextLine();
 
-                                    teachers.updateTeacher(updatedTeacher, updatedFio, updatedYearOfBirth);
+                                    dataBase.updateTeacher(updatedTeacher, updatedFio, updatedYearOfBirth);
                                 } else {
                                     System.out.println("В массиве нет преподавателей");
                                 }
                                 break;
                             case 4:
                                 //добавление курса преподавателю
-                                if (!teachers.getTeachers().isEmpty()) {
+                                if (!dataBase.getTeachers().isEmpty()) {
                                     System.out.println("Какому преподавателю вы хотите дать курс (по id)");
-                                    Teacher teacher = teachers.findTeacherById(scanner.nextInt());                      //Ввод преподавателя
+                                    Teacher teacher = dataBase.findTeacherById(scanner.nextInt());                      //Ввод преподавателя
                                     System.out.println("Какой курс вы хотите дать преподавателю (по id)");
-                                    Course course = courses.findCourseById(scanner.nextInt());                         //Ввод курса
+                                    Course course = dataBase.findCourseById(scanner.nextInt());                         //Ввод курса
 
                                     teacher.addCourseToTeacher(course);                                        //Добавление курса преподавателю
                                 } else {
@@ -94,13 +91,13 @@ public class Main {
                                 break;
                             case 5:
                                 //удаление курса у преподавателя
-                                if (!teachers.getTeachers().isEmpty()) {
+                                if (!dataBase.getTeachers().isEmpty()) {
                                     System.out.println("У какого преподавателя вы хотите удалить курс (по id)");
-                                    Teacher teacher = teachers.findTeacherById(scanner.nextInt());                      //Ввод преподавателя
+                                    Teacher teacher = dataBase.findTeacherById(scanner.nextInt());                      //Ввод преподавателя
 
                                     if (!teacher.getCourses().isEmpty()) {
                                         System.out.println("Какой курс вы хотите удалить у преподавателя (по id)");
-                                        Course course = courses.findCourseById(scanner.nextInt());                     //Ввод курса
+                                        Course course = dataBase.findCourseById(scanner.nextInt());                     //Ввод курса
                                         teacher.removeCourseToTeacher(course);                                 //Удаление курса у преподавателя
                                     } else {
                                         System.out.println("У этого преподавателя нет курсов");
@@ -111,11 +108,11 @@ public class Main {
                                 break;
                             case 6:
                                 //вывод всех преподавателей
-                                teachers.showTeachers();
+                                dataBase.showTeachers();
                                 break;
                             case 7:
                                 //вывод всех преподавателей и их курсы
-                                teachers.showTeachersWithCourses();
+                                dataBase.showTeachersWithCourses();
                                 break;
                         }
 
@@ -143,22 +140,22 @@ public class Main {
                                 String title = scanner.nextLine();
                                 System.out.print("Введите количество часов курса: ");
                                 int numberOfHours = scanner.nextInt();
-                                courses.addCourse(title, numberOfHours);
+                                dataBase.addCourse(title, numberOfHours);
                                 break;
                             case 2:
                                 //удаление курса из массива
-                                if (!courses.getCourses().isEmpty()) {
+                                if (!dataBase.getCourses().isEmpty()) {
                                     System.out.print("Какой курс вы хотите удалить (по id): ");
-                                    courses.removeCourse(courses.findCourseById(scanner.nextInt()));
+                                    dataBase.removeCourse(dataBase.findCourseById(scanner.nextInt()));
                                 } else {
                                     System.out.println("В массиве нет курсов");
                                 }
                                 break;
                             case 3:
                                 //изменение одного из курсов
-                                if (!courses.getCourses().isEmpty()) {
+                                if (!dataBase.getCourses().isEmpty()) {
                                     System.out.print("Какой курс вы хотите изменить (по id): ");
-                                    Course updatedCourse = courses.findCourseById(scanner.nextInt());
+                                    Course updatedCourse = dataBase.findCourseById(scanner.nextInt());
 
                                     System.out.println("Если вы не хотите менять поле, отсавьте его пустым");
 
@@ -169,14 +166,14 @@ public class Main {
                                     System.out.print("Изменить количество часов: ");
                                     String updatedNumberOfHours = scanner.nextLine();
 
-                                    courses.updateCourse(updatedCourse, updatedTitle, updatedNumberOfHours);
+                                    dataBase.updateCourse(updatedCourse, updatedTitle, updatedNumberOfHours);
                                 } else {
                                     System.out.println("Курсов нет в массиве");
                                 }
                                 break;
                             case 4:
                                 //вывод всех курсов
-                                courses.showCourses();
+                                dataBase.showCourses();
                                 break;
                         }
 
@@ -205,22 +202,22 @@ public class Main {
                                 System.out.print("Введите название группы: ");
                                 scanner.nextLine();
                                 String title = scanner.nextLine();
-                                groups.addGroup(title);
+                                dataBase.addGroup(title);
                                 break;
                             case 2:
                                 //удаление группы из массива
-                                if (!groups.getGroups().isEmpty()) {
+                                if (!dataBase.getGroups().isEmpty()) {
                                     System.out.print("Какую группу вы хотите удалить (по id): ");
-                                    groups.removeGroup(groups.findGroupById(scanner.nextInt()));
+                                    dataBase.removeGroup(dataBase.findGroupById(scanner.nextInt()));
                                 } else {
                                     System.out.println("В массиве нет групп");
                                 }
                                 break;
                             case 3:
                                 //изменение одной из групп
-                                if (!groups.getGroups().isEmpty()) {
+                                if (!dataBase.getGroups().isEmpty()) {
                                     System.out.print("Какую группу вы хотите изменить (по id): ");
-                                    Group updatedGroup = groups.findGroupById(scanner.nextInt());
+                                    Group updatedGroup = dataBase.findGroupById(scanner.nextInt());
 
                                     System.out.println("Если вы не хотите менять поле, отсавьте его пустым");
 
@@ -228,18 +225,18 @@ public class Main {
                                     scanner.nextLine();                         //блокирует \n
                                     String updatedTitle = scanner.nextLine();
 
-                                    groups.updateGroup(updatedGroup, updatedTitle);
+                                    dataBase.updateGroup(updatedGroup, updatedTitle);
                                 } else {
                                     System.out.println("Групп нет в массиве");
                                 }
                                 break;
                             case 4:
                                 //добавление курса группе
-                                if (!groups.getGroups().isEmpty()) {
+                                if (!dataBase.getGroups().isEmpty()) {
                                     System.out.println("Какой группе вы хотите дать курс (по id)");
-                                    Group group = groups.findGroupById(scanner.nextInt());                      //Ввод группы
+                                    Group group = dataBase.findGroupById(scanner.nextInt());                      //Ввод группы
                                     System.out.println("Какой курс вы хотите дать группе (по id)");
-                                    Course course = courses.findCourseById(scanner.nextInt());                         //Ввод курса
+                                    Course course = dataBase.findCourseById(scanner.nextInt());                         //Ввод курса
 
                                     group.addCourseToGroup(course);                                        //Добавление курса группе
                                 } else {
@@ -248,13 +245,13 @@ public class Main {
                                 break;
                             case 5:
                                 //удаление курса у группы
-                                if (!groups.getGroups().isEmpty()) {
+                                if (!dataBase.getGroups().isEmpty()) {
                                     System.out.println("У какой группы вы хотите удалить курс (по id)");
-                                    Group group = groups.findGroupById(scanner.nextInt());                      //Ввод преподавателя
+                                    Group group = dataBase.findGroupById(scanner.nextInt());                      //Ввод преподавателя
 
                                     if (!group.getCourses().isEmpty()) {
                                         System.out.println("Какой курс вы хотите удалить у группы (по id)");
-                                        Course course = courses.findCourseById(scanner.nextInt());                     //Ввод курса
+                                        Course course = dataBase.findCourseById(scanner.nextInt());                     //Ввод курса
                                         group.removeCourseToGroup(course);                                 //Удаление курса у преподавателя
                                     } else {
                                         System.out.println("У этой группы нет курсов");
@@ -265,11 +262,11 @@ public class Main {
                                 break;
                             case 6:
                                 //вывод всех групп
-                                groups.showGroups();
+                                dataBase.showGroups();
                                 break;
                             case 7:
                                 //вывод всех групп и их курсы
-                                groups.showGroupsWithCourses();
+                                dataBase.showGroupsWithCourses();
                                 break;
                         }
 
@@ -301,22 +298,22 @@ public class Main {
                                 System.out.print("Введите курс студента: ");
                                 int yearOfStudy = scanner.nextInt();
 
-                                students.addStudent(fio, yearOfBirth, yearOfStudy);
+                                dataBase.addStudent(fio, yearOfBirth, yearOfStudy);
                                 break;
                             case 2:
                                 //удаление студента из массива
-                                if (!students.getStudents().isEmpty()) {
+                                if (!dataBase.getStudents().isEmpty()) {
                                     System.out.print("Какого студента вы хотите удалить (по id): ");
-                                    students.removeStudent(students.findStudentById(scanner.nextInt()));
+                                    dataBase.removeStudent(dataBase.findStudentById(scanner.nextInt()));
                                 } else {
                                     System.out.println("Студентов нет в массиве");
                                 }
                                 break;
                             case 3:
                                 //изменение одного из студентов
-                                if (!students.getStudents().isEmpty()) {
+                                if (!dataBase.getStudents().isEmpty()) {
                                     System.out.print("Какого студента вы хотите изменить (по id): ");
-                                    Student updatedStudent = students.findStudentById(scanner.nextInt());
+                                    Student updatedStudent = dataBase.findStudentById(scanner.nextInt());
 
                                     System.out.println("Если вы не хотите менять поле, отсавьте его пустым");
 
@@ -330,18 +327,18 @@ public class Main {
                                     System.out.print("Изменить курс студента: ");
                                     String updatedYearOfStudy = scanner.nextLine();
 
-                                    students.updateStudent(updatedStudent, updatedFio, updatedYearOfBirth, updatedYearOfStudy);
+                                    dataBase.updateStudent(updatedStudent, updatedFio, updatedYearOfBirth, updatedYearOfStudy);
                                 } else {
                                     System.out.println("Студентов нет в массиве");
                                 }
                                 break;
                             case 4:
                                 //добавление студента в группу
-                                if (!students.getStudents().isEmpty()) {
+                                if (!dataBase.getStudents().isEmpty()) {
                                     System.out.print("Какого студента вы хотите добавить в группу (по id): ");
-                                    Student student = students.findStudentById(scanner.nextInt());
+                                    Student student = dataBase.findStudentById(scanner.nextInt());
                                     System.out.print("В какую группу вы хотите добавить студента (по id): ");
-                                    Group group = groups.findGroupById(scanner.nextInt());
+                                    Group group = dataBase.findGroupById(scanner.nextInt());
 
                                     student.addGroupToStudent(group);
                                 } else {
@@ -350,7 +347,7 @@ public class Main {
                                 break;
                             case 5:
                                 //Вывод всех студентов
-                                students.showStudents();
+                                dataBase.showStudents();
                                 break;
                         }
 
@@ -366,40 +363,40 @@ public class Main {
 
     //Функция, предназначенная для тестов
     public static void Test() {
-        teachers.addTeacher("Павлова Ирина Васильевна", 1972);
-        teachers.addTeacher("Петрова Елена Федоровна", 1978);
-        teachers.addTeacher("Иванова Катерина Захаровна", 1995);
+        dataBase.addTeacher("Павлова Ирина Васильевна", 1972);
+        dataBase.addTeacher("Петрова Елена Федоровна", 1978);
+        dataBase.addTeacher("Иванова Катерина Захаровна", 1995);
 
-        courses.addCourse("Программирование", 12);
-        courses.addCourse("Информатика", 10);
-        courses.addCourse("Математика", 10);
+        dataBase.addCourse("Программирование", 12);
+        dataBase.addCourse("Информатика", 10);
+        dataBase.addCourse("Математика", 10);
 
-        teachers.findTeacherById(1).addCourseToTeacher(courses.findCourseById(1));
-        teachers.findTeacherById(1).addCourseToTeacher(courses.findCourseById(3));
-        teachers.findTeacherById(2).addCourseToTeacher(courses.findCourseById(2));
-        teachers.findTeacherById(3).addCourseToTeacher(courses.findCourseById(3));
+        dataBase.findTeacherById(1).addCourseToTeacher(dataBase.findCourseById(1));
+        dataBase.findTeacherById(1).addCourseToTeacher(dataBase.findCourseById(3));
+        dataBase.findTeacherById(2).addCourseToTeacher(dataBase.findCourseById(2));
+        dataBase.findTeacherById(3).addCourseToTeacher(dataBase.findCourseById(3));
 
-        students.addStudent("Миляев Андрей Викторович", 2004, 2);
-        students.addStudent("Хренов Михаил Васильевич", 2002, 4);
-        students.addStudent("Романов Иван Васильевич", 2000, 5);
-        students.addStudent("Добрынина Наталья Алексеевна", 2005, 1);
-        students.addStudent("Писцова Татьяна Михайловна", 2005, 1);
+        dataBase.addStudent("Миляев Андрей Викторович", 2004, 2);
+        dataBase.addStudent("Хренов Михаил Васильевич", 2002, 4);
+        dataBase.addStudent("Романов Иван Васильевич", 2000, 5);
+        dataBase.addStudent("Добрынина Наталья Алексеевна", 2005, 1);
+        dataBase.addStudent("Писцова Татьяна Михайловна", 2005, 1);
 
-        groups.addGroup("У-1");
-        groups.addGroup("У-2");
-        groups.addGroup("У-3");
+        dataBase.addGroup("У-1");
+        dataBase.addGroup("У-2");
+        dataBase.addGroup("У-3");
 
-        groups.findGroupById(1).addCourseToGroup(courses.findCourseById(1));
-        groups.findGroupById(1).addCourseToGroup(courses.findCourseById(2));
-        groups.findGroupById(2).addCourseToGroup(courses.findCourseById(2));
-        groups.findGroupById(2).addCourseToGroup(courses.findCourseById(3));
-        groups.findGroupById(3).addCourseToGroup(courses.findCourseById(1));
-        groups.findGroupById(3).addCourseToGroup(courses.findCourseById(3));
+        dataBase.findGroupById(1).addCourseToGroup(dataBase.findCourseById(1));
+        dataBase.findGroupById(1).addCourseToGroup(dataBase.findCourseById(2));
+        dataBase.findGroupById(2).addCourseToGroup(dataBase.findCourseById(2));
+        dataBase.findGroupById(2).addCourseToGroup(dataBase.findCourseById(3));
+        dataBase.findGroupById(3).addCourseToGroup(dataBase.findCourseById(1));
+        dataBase.findGroupById(3).addCourseToGroup(dataBase.findCourseById(3));
 
-        students.findStudentById(1).setGroup(groups.findGroupById(1));
-        students.findStudentById(2).setGroup(groups.findGroupById(1));
-        students.findStudentById(5).setGroup(groups.findGroupById(1));
-        students.findStudentById(3).setGroup(groups.findGroupById(2));
-        students.findStudentById(4).setGroup(groups.findGroupById(2));
+        dataBase.findStudentById(1).setGroup(dataBase.findGroupById(1));
+        dataBase.findStudentById(2).setGroup(dataBase.findGroupById(1));
+        dataBase.findStudentById(5).setGroup(dataBase.findGroupById(1));
+        dataBase.findStudentById(3).setGroup(dataBase.findGroupById(2));
+        dataBase.findStudentById(4).setGroup(dataBase.findGroupById(2));
     }
 }

@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Student extends Person{
     private int id;
     private Group group;
