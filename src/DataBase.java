@@ -57,6 +57,14 @@ public class DataBase {
         }
     }
 
+    public void addCourseToTeacher(Teacher teacher, Course course) {
+        teacher.getCourses().add(course);
+    }
+
+    public void removeCourseToTeacher(Teacher teacher, Course course) {
+        teacher.getCourses().remove(course);
+    }
+
     public Teacher findTeacherById(int id) {
         for (Teacher teacher : teachers) {
             if (teacher.getId() == id) {
@@ -98,6 +106,16 @@ public class DataBase {
         for (Student student : students) {
             System.out.println(student.getId() + "\t" + student.getFio());
         }
+    }
+
+    public void showStudentsWithGroups() {
+        for (Student student : students) {
+            System.out.println(student.getId() + "\t" + student.getFio() + "\t (" + student.getGroup().getId() + ")" + student.getGroup().getTitle());
+        }
+    }
+
+    public void addGroupToStudent(Student student, Group group) {
+        student.setGroup(group);
     }
 
     public Student findStudentById(int id) {
@@ -184,6 +202,14 @@ public class DataBase {
                 System.out.println("\t" + course.getId() + "\t" + course.getTitle());
             }
         }
+    }
+
+    public void addCourseToGroup(Group group, Course course) {
+        group.getCourses().add(course);
+    }
+
+    public void removeCourseToGroup(Group group, Course course) {
+        group.getCourses().remove(course);
     }
 
     public Group findGroupById(int id) {

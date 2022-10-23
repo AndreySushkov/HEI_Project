@@ -84,7 +84,7 @@ public class Main {
                                     System.out.println("Какой курс вы хотите дать преподавателю (по id)");
                                     Course course = dataBase.findCourseById(scanner.nextInt());                         //Ввод курса
 
-                                    teacher.addCourseToTeacher(course);                                        //Добавление курса преподавателю
+                                    dataBase.addCourseToTeacher(teacher, course);                                       //Добавление курса преподавателю
                                 } else {
                                     System.out.print("Преподавателей нет в массиве");
                                 }
@@ -98,7 +98,7 @@ public class Main {
                                     if (!teacher.getCourses().isEmpty()) {
                                         System.out.println("Какой курс вы хотите удалить у преподавателя (по id)");
                                         Course course = dataBase.findCourseById(scanner.nextInt());                     //Ввод курса
-                                        teacher.removeCourseToTeacher(course);                                 //Удаление курса у преподавателя
+                                        dataBase.removeCourseToTeacher(teacher, course);                                //Удаление курса у преподавателя
                                     } else {
                                         System.out.println("У этого преподавателя нет курсов");
                                     }
@@ -238,7 +238,7 @@ public class Main {
                                     System.out.println("Какой курс вы хотите дать группе (по id)");
                                     Course course = dataBase.findCourseById(scanner.nextInt());                         //Ввод курса
 
-                                    group.addCourseToGroup(course);                                        //Добавление курса группе
+                                    dataBase.addCourseToGroup(group, course);                                     //Добавление курса группе
                                 } else {
                                     System.out.print("Групп нет в массиве");
                                 }
@@ -252,7 +252,7 @@ public class Main {
                                     if (!group.getCourses().isEmpty()) {
                                         System.out.println("Какой курс вы хотите удалить у группы (по id)");
                                         Course course = dataBase.findCourseById(scanner.nextInt());                     //Ввод курса
-                                        group.removeCourseToGroup(course);                                 //Удаление курса у преподавателя
+                                        dataBase.removeCourseToGroup(group, course);                                 //Удаление курса у преподавателя
                                     } else {
                                         System.out.println("У этой группы нет курсов");
                                     }
@@ -283,6 +283,7 @@ public class Main {
                                 "3) Редактировать студента\n" +
                                 "4) Добавить студента в группу\n" +
                                 "5) Показать всех студентов\n" +
+                                "6) Показать всех студентов и их группы\n" +
                                 "0) Выйти в главное меню");
 
                         choice = scanner.nextInt();
@@ -340,7 +341,7 @@ public class Main {
                                     System.out.print("В какую группу вы хотите добавить студента (по id): ");
                                     Group group = dataBase.findGroupById(scanner.nextInt());
 
-                                    student.addGroupToStudent(group);
+                                    dataBase.addGroupToStudent(student, group);
                                 } else {
                                     System.out.println("Студентов нет в массиве");
                                 }
@@ -348,6 +349,10 @@ public class Main {
                             case 5:
                                 //Вывод всех студентов
                                 dataBase.showStudents();
+                                break;
+                            case 6:
+                                //Вывод всех студентов и их группы
+                                dataBase.showStudentsWithGroups();
                                 break;
                         }
 
@@ -371,13 +376,13 @@ public class Main {
         dataBase.addCourse("Информатика", 10);
         dataBase.addCourse("Математика", 10);
 
-        dataBase.findTeacherById(1).addCourseToTeacher(dataBase.findCourseById(1));
-        dataBase.findTeacherById(1).addCourseToTeacher(dataBase.findCourseById(3));
-        dataBase.findTeacherById(2).addCourseToTeacher(dataBase.findCourseById(2));
-        dataBase.findTeacherById(3).addCourseToTeacher(dataBase.findCourseById(3));
+        dataBase.addCourseToTeacher(dataBase.findTeacherById(1), dataBase.findCourseById(1));
+        dataBase.addCourseToTeacher(dataBase.findTeacherById(1), dataBase.findCourseById(3));
+        dataBase.addCourseToTeacher(dataBase.findTeacherById(2), dataBase.findCourseById(2));
+        dataBase.addCourseToTeacher(dataBase.findTeacherById(3), dataBase.findCourseById(3));
 
-        dataBase.addStudent("Миляев Андрей Викторович", 2004, 2);
-        dataBase.addStudent("Хренов Михаил Васильевич", 2002, 4);
+        dataBase.addStudent("Панаев Андрей Викторович", 2004, 2);
+        dataBase.addStudent("Скабичевский Михаил Васильевич", 2002, 4);
         dataBase.addStudent("Романов Иван Васильевич", 2000, 5);
         dataBase.addStudent("Добрынина Наталья Алексеевна", 2005, 1);
         dataBase.addStudent("Писцова Татьяна Михайловна", 2005, 1);
@@ -386,17 +391,17 @@ public class Main {
         dataBase.addGroup("У-2");
         dataBase.addGroup("У-3");
 
-        dataBase.findGroupById(1).addCourseToGroup(dataBase.findCourseById(1));
-        dataBase.findGroupById(1).addCourseToGroup(dataBase.findCourseById(2));
-        dataBase.findGroupById(2).addCourseToGroup(dataBase.findCourseById(2));
-        dataBase.findGroupById(2).addCourseToGroup(dataBase.findCourseById(3));
-        dataBase.findGroupById(3).addCourseToGroup(dataBase.findCourseById(1));
-        dataBase.findGroupById(3).addCourseToGroup(dataBase.findCourseById(3));
+        dataBase.addCourseToGroup(dataBase.findGroupById(1), dataBase.findCourseById(1));
+        dataBase.addCourseToGroup(dataBase.findGroupById(1), dataBase.findCourseById(2));
+        dataBase.addCourseToGroup(dataBase.findGroupById(2), dataBase.findCourseById(2));
+        dataBase.addCourseToGroup(dataBase.findGroupById(2), dataBase.findCourseById(3));
+        dataBase.addCourseToGroup(dataBase.findGroupById(3), dataBase.findCourseById(1));
+        dataBase.addCourseToGroup(dataBase.findGroupById(3), dataBase.findCourseById(3));
 
-        dataBase.findStudentById(1).setGroup(dataBase.findGroupById(1));
-        dataBase.findStudentById(2).setGroup(dataBase.findGroupById(1));
-        dataBase.findStudentById(5).setGroup(dataBase.findGroupById(1));
-        dataBase.findStudentById(3).setGroup(dataBase.findGroupById(2));
-        dataBase.findStudentById(4).setGroup(dataBase.findGroupById(2));
+        dataBase.addGroupToStudent(dataBase.findStudentById(1), dataBase.findGroupById(1));
+        dataBase.addGroupToStudent(dataBase.findStudentById(2), dataBase.findGroupById(1));
+        dataBase.addGroupToStudent(dataBase.findStudentById(5), dataBase.findGroupById(1));
+        dataBase.addGroupToStudent(dataBase.findStudentById(3), dataBase.findGroupById(2));
+        dataBase.addGroupToStudent(dataBase.findStudentById(4), dataBase.findGroupById(2));
     }
 }

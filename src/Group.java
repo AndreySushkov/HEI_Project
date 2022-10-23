@@ -9,10 +9,6 @@ public class Group {
         this.title = title;
     }
 
-    public void addCourseToGroup(Course course) {courses.add(course);}
-
-    public void removeCourseToGroup(Course course) {courses.remove(course);}
-
     public void setId(int id) {this.id = id;}
     public void setTitle(String title) {this.title = title;}
     public void setCourses(ArrayList<Course> courses) {this.courses = courses;}

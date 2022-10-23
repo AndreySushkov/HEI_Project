@@ -9,8 +9,6 @@ public class Student extends Person{
         this.yearOfStudy = yearOfStudy;
     }
 
-    public void addGroupToStudent(Group group) {this.setGroup(group);}
-
     public void setId(int id) {this.id = id;}
     public void setGroup(Group group) {this.group = group;}
     public void setYearOfStudy(int yearOfStudy) {this.yearOfStudy = yearOfStudy;}
