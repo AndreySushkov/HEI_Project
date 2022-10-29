@@ -3,7 +3,8 @@ public class Course {
     private String title;
     private int numberOfHours;
 
-    public Course(String title, int numberOfHours) {
+    public Course(int id, String title, int numberOfHours) {
+        this.id = id;
         this.title = title;
         this.numberOfHours = numberOfHours;
     }

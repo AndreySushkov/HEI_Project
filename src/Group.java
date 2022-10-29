@@ -5,7 +5,8 @@ public class Group {
     private String title;
     private ArrayList<Course> courses = new ArrayList<>();
 
-    public Group(String title) {
+    public Group(int id, String title) {
+        this.id = id;
         this.title = title;
     }
 

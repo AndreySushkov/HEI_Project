@@ -4,8 +4,10 @@ public class Teacher extends Person{
     private int id;
     private ArrayList<Course> courses = new ArrayList<>();
 
-    public Teacher(String fio, int yearOfBirth) {
+    public Teacher(int id, String fio, int yearOfBirth) {
         super(fio, yearOfBirth);
+
+        this.id = id;
     }
 
     public void setId(int id) {this.id = id;}

@@ -1,10 +1,13 @@
 import java.util.Scanner;
 
+import java.sql.*;
+
 public class Main {
     final static DataBase dataBase = DataBase.getInstance();
 
-    public static  void main(String[] args) {
-        Test();
+    public static  void main(String[] args) throws SQLException {
+        //Test();
+        dataBase.load();
         Menu();
     }
 
@@ -18,6 +21,7 @@ public class Main {
                     "2) Курсы\n" +
                     "3) Группы\n" +
                     "4) Студенты\n" +
+                    "5) Сохранить\n" +
                     "0) Выход из программы");
 
             choice = scanner.nextInt();
@@ -360,10 +364,22 @@ public class Main {
                     } while (choice != 0);
                     choice = -1;
                     break;
+                case 5:
+                    try {
+                        dataBase.save();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
 
             System.out.println();
         } while (choice != 0);
+        try {
+            dataBase.save();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //Функция, предназначенная для тестов

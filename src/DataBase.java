@@ -1,7 +1,12 @@
+import com.mysql.cj.jdbc.SuspendableXAConnection;
+
 import java.util.ArrayList;
+import java.sql.*;
 
 public class DataBase {
     private static DataBase instance;
+    private DBWorker worker = new DBWorker();
+    private Statement statement;
 
     private ArrayList<Teacher> teachers = new ArrayList<>();
     private ArrayList<Student> students = new ArrayList<>();
@@ -20,12 +25,13 @@ public class DataBase {
 
     //Преподаватели
     public void addTeacher(String fio, int yearOfBirth) {
-        Teacher newTeacher = new Teacher(fio, yearOfBirth);
+        int id;
         if (teachers.isEmpty()) {
-            newTeacher.setId(1);
+            id = 1;
         } else {
-            newTeacher.setId(teachers.get(teachers.size() - 1).getId() + 1);
+            id = teachers.get(teachers.size() - 1).getId() + 1;
         }
+        Teacher newTeacher = new Teacher(id, fio, yearOfBirth);
         teachers.add(newTeacher);
     }
 
@@ -77,12 +83,13 @@ public class DataBase {
 
     //Студенты
     public void addStudent(String fio, int yearOfBirth, int yearOfStudy) {
-        Student newStudent = new Student(fio, yearOfBirth, yearOfStudy);
+        int id;
         if (students.isEmpty()) {
-            newStudent.setId(1);
+            id = 1;
         } else {
-            newStudent.setId(students.get(students.size() - 1).getId() + 1);
+            id = students.get(students.size() - 1).getId() + 1;
         }
+        Student newStudent = new Student(id, fio, yearOfBirth, yearOfStudy);
         students.add(newStudent);
     }
 
@@ -110,7 +117,11 @@ public class DataBase {
 
     public void showStudentsWithGroups() {
         for (Student student : students) {
-            System.out.println(student.getId() + "\t" + student.getFio() + "\t (" + student.getGroup().getId() + ")" + student.getGroup().getTitle());
+            System.out.print(student.getId() + "\t" + student.getFio());
+            if (student.getGroup() != null) {
+                System.out.print("\t (" + student.getGroup().getId() + ")" + student.getGroup().getTitle());
+            }
+            System.out.println();
         }
     }
 
@@ -130,12 +141,13 @@ public class DataBase {
 
     //Курсы
     public void addCourse(String title, int numberOfHours) {
-        Course newCourse = new Course(title, numberOfHours);
+        int id;
         if (courses.isEmpty()) {
-            newCourse.setId(1);
+            id = 0;
         } else {
-            newCourse.setId(courses.get(courses.size() - 1).getId() + 1);
+            id = courses.get(courses.size() - 1).getId() + 1;
         }
+        Course newCourse = new Course(id, title, numberOfHours);
         courses.add(newCourse);
     }
 
@@ -167,15 +179,26 @@ public class DataBase {
         return null;
     }
 
+    //for load from DB
+    public Course findCourseByTitle(String title) {
+        for (Course course : courses) {
+            if (course.getTitle().equals(title)) {
+                return course;
+            }
+        }
+        return null;
+    }
+
 
     //Группы
     public void addGroup(String title) {
-        Group newGroup = new Group(title);
+        int id;
         if (groups.isEmpty()) {
-            newGroup.setId(1);
+            id = 1;
         } else {
-            newGroup.setId(groups.get(groups.size() - 1).getId() + 1);
+            id = groups.get(groups.size() - 1).getId() + 1;
         }
+        Group newGroup = new Group(id, title);
         groups.add(newGroup);
     }
 
@@ -198,8 +221,10 @@ public class DataBase {
     public void showGroupsWithCourses() {
         for (Group group : groups) {
             System.out.println(group.getId() + "\t" + group.getTitle());
-            for (Course course : group.getCourses()) {
-                System.out.println("\t" + course.getId() + "\t" + course.getTitle());
+            if (group.getCourses().size() != 0) {
+                for (Course course : group.getCourses()) {
+                    System.out.println("\t" + course.getId() + "\t" + course.getTitle());
+                }
             }
         }
     }
@@ -221,6 +246,172 @@ public class DataBase {
         return null;
     }
 
+    public Group findGroupByTitle(String title) {
+        for (Group group : groups) {
+            if (group.getTitle() == title) {
+                return group;
+            }
+        }
+        return null;
+    }
+
+
+    public void load() throws SQLException {
+        statement = worker.getConnection().createStatement();
+
+        //Курсы
+        ResultSet resultSet = statement.executeQuery("select * from courses");
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String title = resultSet.getString("title");
+            int numberOfHours = resultSet.getInt("numberOfHours");
+            courses.add(new Course(id, title, numberOfHours));
+        }
+
+        //Преподаватели
+        resultSet = statement.executeQuery("select * from teachers;");
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String fio = resultSet.getString("fio");
+            int yearOfBirth = resultSet.getInt("yearOfBirth");
+
+            Teacher newTeacher = new Teacher(id, fio, yearOfBirth);
+
+            //загрузка курсов преподавателей
+            if (resultSet.getString("courses") != null) {
+                String[] coursesList = resultSet.getString("courses").split(", ");
+                for (String courseTitle : coursesList) {
+                    Course newCourse = findCourseByTitle(courseTitle);
+                    addCourseToTeacher(newTeacher, newCourse);
+                }
+            }
+
+            teachers.add(newTeacher);
+        }
+
+        //Группы
+        resultSet = statement.executeQuery("select * from groups_");
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String title = resultSet.getString("title");
+
+            Group newGroup = new Group(id, title);
+
+            //Загрузка курсов групп
+            if (resultSet.getString("courses") != null) {
+                String[] courseList = resultSet.getString("courses").split(", ");
+                for (String courseTitle : courseList) {
+                    Course newCourse = findCourseByTitle(courseTitle);
+                    addCourseToGroup(newGroup, newCourse);
+                }
+            }
+
+            groups.add(newGroup);
+        }
+
+        //Студенты
+        resultSet = statement.executeQuery("select * from students");
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String fio = resultSet.getString("fio");
+            int yearOfBirth = resultSet.getInt("yearOfBirth");
+            int yearOfStudy = resultSet.getInt("yearOfStudy");
+
+            Student newStudent = new Student(id, fio, yearOfBirth, yearOfStudy);
+
+            //загрузка групп студентов
+            if (resultSet.getString("group_") != null) {
+                String[] groupList = resultSet.getString("group_").split(", ");
+                for (String groupTitle : groupList) {
+                    Group newGroup = findGroupByTitle(groupTitle);
+                    addGroupToStudent(newStudent, newGroup);
+                }
+            }
+
+            students.add(newStudent);
+        }
+    }
+
+    public void save() throws SQLException {
+        statement = worker.getConnection().createStatement();
+        statement.executeUpdate("delete from courses");
+        statement.executeUpdate("delete from teachers");
+        statement.executeUpdate("delete from groups_");
+        statement.executeUpdate("delete from students");
+
+        //Курсы
+        PreparedStatement preparedStatement = worker.getConnection().prepareStatement("insert into courses(id, title, numberOfHours) values(?, ?, ?)");
+        for (Course course : courses) {
+            preparedStatement.setInt(1, course.getId());
+            preparedStatement.setString(2, course.getTitle());
+            preparedStatement.setInt(3, course.getNumberOfHours());
+
+            preparedStatement.execute();
+        }
+
+        //Преподаватели
+        preparedStatement = worker.getConnection().prepareStatement("insert into teachers(id, fio, yearOfBirth, courses) values (?, ?, ?, ?)");
+        for (Teacher teacher : teachers) {
+            preparedStatement.setInt(1, teacher.getId());
+            preparedStatement.setString(2, teacher.getFio());
+            preparedStatement.setInt(3, teacher.getYearOfBirth());
+
+            //сохранение списка курсов
+            String coursesList = null;
+            if (!teacher.getCourses().isEmpty()) {
+                coursesList = "";
+                for (int i = 0; i < teacher.getCourses().size(); i++) {
+                    coursesList += teacher.getCourses().get(i).getTitle();
+                    if (i != teacher.getCourses().size() - 1) {
+                        coursesList += ", ";
+                    }
+                }
+            }
+            preparedStatement.setString(4, coursesList);
+
+            preparedStatement.execute();
+        }
+
+        //Группы
+        preparedStatement = worker.getConnection().prepareStatement("insert into groups_(id, title, courses) values (?, ?, ?)");
+        for (Group group : groups) {
+            preparedStatement.setInt(1, group.getId());
+            preparedStatement.setString(2, group.getTitle());
+
+            //сохранение списка курсов
+            String coursesList = null;
+            if (!group.getCourses().isEmpty()) {
+                coursesList = "";
+                for (int i = 0; i < group.getCourses().size(); i++) {
+                    coursesList += group.getCourses().get(i).getTitle();
+                    if (i != group.getCourses().size() - 1) {
+                        coursesList += ", ";
+                    }
+                }
+            }
+            preparedStatement.setString(3, coursesList);
+
+            preparedStatement.execute();
+        }
+
+        //Студенты
+        preparedStatement = worker.getConnection().prepareStatement("insert into students(id, fio, yearOfBirth, yearOfStudy, group_) values (?, ?, ?, ?, ?)");
+        for (Student student : students) {
+            preparedStatement.setInt(1, student.getId());
+            preparedStatement.setString(2, student.getFio());
+            preparedStatement.setInt(3, student.getYearOfBirth());
+            preparedStatement.setInt(4, student.getYearOfStudy());
+
+            //сохранение группы
+            String group = null;
+            if (student.getGroup() != null) {
+                group = student.getGroup().getTitle();
+            }
+            preparedStatement.setString(5, group);
+
+            preparedStatement.execute();
+        }
+    }
 
     public void setTeachers(ArrayList<Teacher> teachers) {this.teachers = teachers;}
     public void setStudents(ArrayList<Student> students) {this.students = students;}

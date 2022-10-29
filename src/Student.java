@@ -3,9 +3,10 @@ public class Student extends Person{
     private Group group;
     private int yearOfStudy;
 
-    public Student(String fio, int yearOfBirth, int yearOfStudy) {
+    public Student(int id, String fio, int yearOfBirth, int yearOfStudy) {
         super(fio, yearOfBirth);
 
+        this.id = id;
         this.yearOfStudy = yearOfStudy;
     }
 
