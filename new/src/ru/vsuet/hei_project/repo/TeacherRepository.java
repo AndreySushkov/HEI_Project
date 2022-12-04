@@ -11,9 +11,9 @@ public class TeacherRepository implements IRepository<Teacher> {
     private final String SELECT_ALL = "select * from teachers;";
     private final String SELECT_SINGLE = "select * from teachers where id = ?;";
     private final String SELECT_SINGLE_COURSES = "select * from teachers t join courses c on t.id = c.teacher_id where t.id = ?;";
-    private final String INSERT = "insert into teachers(fio) values (?);";
+    private final String INSERT = "insert into teachers(fio, yearBirth, monthBirth, dayBirth) values (?, ?, ?, ?);";
     private final String DELETE = "delete from teachers where id = ?;";
-    private final String UPDATE = "update teachers set fio = ? where id = ?;";
+    private final String UPDATE = "update teachers set fio = ?, yearBirth = ?, monthBirth = ?, dayBirth = ? where id = ?;";
 
     private final Connection connection;
 
@@ -32,6 +32,9 @@ public class TeacherRepository implements IRepository<Teacher> {
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 String fio = resultSet.getString("fio");
+                Integer yearBirth = resultSet.getInt("yearBirth");
+                Integer monthBirth = resultSet.getInt("monthBirth");
+                Integer dayBirth = resultSet.getInt("dayBirth");
 
                 statement1.setLong(1, id);
                 ResultSet resultSet1 = statement1.executeQuery();
@@ -42,7 +45,7 @@ public class TeacherRepository implements IRepository<Teacher> {
                     courses.add(new Course(cId, cTitle));
                 }
 
-                list.add(new Teacher(id, fio, courses));
+                list.add(new Teacher(id, fio, yearBirth, monthBirth, dayBirth, courses));
             }
             return list;
         } catch (SQLException e) {
@@ -69,7 +72,10 @@ public class TeacherRepository implements IRepository<Teacher> {
             resultSet = statement1.executeQuery();
             while (resultSet.next()) {
                 String fio = resultSet.getString("fio");
-                return new Teacher(id, fio, courses);
+                Integer yearBirth = resultSet.getInt("yearBirth");
+                Integer monthBirth = resultSet.getInt("monthBirth");
+                Integer dayBirth = resultSet.getInt("dayBirth");
+                return new Teacher(id, fio, yearBirth, monthBirth, dayBirth, courses);
             }
 
             return null;
@@ -84,7 +90,13 @@ public class TeacherRepository implements IRepository<Teacher> {
                 PreparedStatement statement = connection.prepareStatement(INSERT);
                 ) {
             String fio = source.getFio();
+            Integer yearBirth = source.getYearBirth();
+            Integer monthBirth = source.getMonthBirth();
+            Integer dayBirth = source.getDayBirth();
             statement.setString(1, fio);
+            statement.setInt(2, yearBirth);
+            statement.setInt(3, monthBirth);
+            statement.setInt(4, dayBirth);
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Error while method save call: " + e.getMessage());
@@ -98,8 +110,14 @@ public class TeacherRepository implements IRepository<Teacher> {
                 ) {
             long id = source.getId();
             String fio = source.getFio();
+            Integer yearBirth = source.getYearBirth();
+            Integer monthBirth = source.getMonthBirth();
+            Integer dayBirth = source.getDayBirth();
             statement.setString(1, fio);
-            statement.setLong(2, id);
+            statement.setInt(2, yearBirth);
+            statement.setInt(3, monthBirth);
+            statement.setInt(4, dayBirth);
+            statement.setLong(5, id);
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Error while method update call: " + e.getMessage());

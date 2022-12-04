@@ -12,9 +12,9 @@ import java.util.List;
 public class StudentRepository implements IRepository<Student> {
     private final String SELECT_ALL = "select * from students;";
     private final String SELECT_SINGLE = "select * from students where id = ?;";
-    private final String INSERT = "insert into students(fio) values (?);";
+    private final String INSERT = "insert into students(fio, yearBirth, monthBirth, dayBirth, yearStudy, numberRecordBook) values (?, ?, ?, ?, ?, ?);";        //создание без групппы
     private final String DELETE = "delete from students where id = ?;";
-    private final String UPDATE = "update students set fio = ?, group_id = ? where id = ?;";
+    private final String UPDATE = "update students set fio = ?, yearBirth = ?, monthBirth = ?, dayBirth = ?, yearStudy = ?, numberRecordBook = ?, group_id = ? where id = ?;";
 
     private Connection connection;
 
@@ -32,7 +32,12 @@ public class StudentRepository implements IRepository<Student> {
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 String fio = resultSet.getString("fio");
-                Student student = new Student(id, fio);
+                Integer yearBirth = resultSet.getInt("yearBirth");
+                Integer monthBirth = resultSet.getInt("monthBirth");
+                Integer dayBirth = resultSet.getInt("dayBirth");
+                Integer yearStudy = resultSet.getInt("yearStudy");
+                Integer numberRecordBook = resultSet.getInt("numberRecordBook");
+                Student student = new Student(id, fio, yearBirth, monthBirth, dayBirth, yearStudy, numberRecordBook);
 
                 list.add(student);
             }
@@ -51,7 +56,12 @@ public class StudentRepository implements IRepository<Student> {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String fio = resultSet.getString("fio");
-                return new Student(id, fio);
+                Integer yearBirth = resultSet.getInt("yearBirth");
+                Integer monthBirth = resultSet.getInt("monthBirth");
+                Integer dayBirth = resultSet.getInt("dayBirth");
+                Integer yearStudy = resultSet.getInt("yearStudy");
+                Integer numberRecordBook = resultSet.getInt("numberRecordBook");
+                return new Student(id, fio, yearBirth, monthBirth, dayBirth, yearStudy, numberRecordBook);
             }
 
             return null;
@@ -66,7 +76,17 @@ public class StudentRepository implements IRepository<Student> {
                 PreparedStatement statement = connection.prepareStatement(INSERT);
         ) {
             String fio = source.getFio();
+            int yearBirth = source.getYearBirth();
+            int monthBirth = source.getMonthBirth();
+            int dayBirth = source.getDayBirth();
+            int yearStudy = source.getYearStudy();
+            int numberRecordBook = source.getNumberRecordBook();
             statement.setString(1, fio);
+            statement.setInt(2, yearBirth);
+            statement.setInt(3, monthBirth);
+            statement.setInt(4, dayBirth);
+            statement.setInt(5, yearStudy);
+            statement.setInt(6, numberRecordBook);
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Error while method save call: " + e.getMessage());
@@ -80,10 +100,20 @@ public class StudentRepository implements IRepository<Student> {
         ) {
             long id = source.getId();
             String fio = source.getFio();
+            Integer yearBirth = source.getYearBirth();
+            Integer monthBirth = source.getMonthBirth();
+            Integer dayBirth = source.getDayBirth();
+            Integer yearStudy = source.getYearStudy();
+            Integer numberRecordBook = source.getNumberRecordBook();
             Long group_id = source.getGroup_id();
             statement.setString(1, fio);
-            statement.setObject(2, group_id);
-            statement.setLong(3, id);
+            statement.setInt(2, yearBirth);
+            statement.setInt(3, monthBirth);
+            statement.setInt(4, dayBirth);
+            statement.setInt(5, yearStudy);
+            statement.setInt(6, numberRecordBook);
+            statement.setObject(7, group_id);
+            statement.setLong(8, id);
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Error while method update call: " + e.getMessage());

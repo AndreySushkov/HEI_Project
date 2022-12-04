@@ -1,5 +1,6 @@
 package ru.vsuet.hei_project.view;
 
+import ru.vsuet.hei_project.domain.Group;
 import ru.vsuet.hei_project.domain.Student;
 import ru.vsuet.hei_project.service.IService;
 
@@ -66,7 +67,17 @@ public class StudentMenu {
         System.out.print("Введите ФИО: ");
         keyboard.nextLine();                           //нужно, чтобы не скипалась следующая строчка
         String fio = keyboard.nextLine();
-        Student student = new Student(0L, fio);     //id не важен
+        System.out.print("Введите год рождения: ");
+        int yearBirth = keyboard.nextInt();
+        System.out.print("Введите месяц рождения: ");
+        int monthBirth = keyboard.nextInt();
+        System.out.print("Введите день рождения: ");
+        int dayBirth = keyboard.nextInt();
+        System.out.print("Введите курс обучения: ");
+        int yearStudy = keyboard.nextInt();
+        System.out.print("Введите номер зачетной книжки: ");
+        int numberRecordBook = keyboard.nextInt();
+        Student student = new Student(0L, fio, yearBirth, monthBirth, dayBirth, yearStudy, numberRecordBook);     //id не важен
         studentService.save(student);
 
         System.out.println("Студент записан");
@@ -89,14 +100,46 @@ public class StudentMenu {
         Long id = keyboard.nextLong();
         Student student = studentService.getById(id);
 
+        System.out.println("Оставьте поле пустым если не хотите его менять");
+
         System.out.print("Введите ФИО: ");
         keyboard.nextLine();
-        String newTitle = keyboard.nextLine();
-        if (newTitle == "") {
-            newTitle = student.getFio();
+        String newFio = keyboard.nextLine();
+        if (newFio == "") {
+            newFio = student.getFio();
+        }
+        System.out.print("Введите год рождения: ");
+        String sNewYearBirth = keyboard.nextLine();
+        int newYearBirth = student.getYearBirth();
+        if (sNewYearBirth != "") {
+            newYearBirth = Integer.parseInt(sNewYearBirth);
+        }
+        System.out.print("Введите месяц рождения: ");
+        String sNewMonthBirth = keyboard.nextLine();
+        int newMonthBirth = student.getMonthBirth();
+        if (sNewMonthBirth != "") {
+            newMonthBirth = Integer.parseInt(sNewMonthBirth);
+        }
+        System.out.print("Введите день рождения: ");
+        String sNewDayBirth = keyboard.nextLine();
+        int newDayBirth = student.getDayBirth();
+        if (sNewDayBirth != "") {
+            newDayBirth = Integer.parseInt(sNewDayBirth);
+        }
+        System.out.print("Введите курс обучения: ");
+        String sNewYearStudy = keyboard.nextLine();
+        int newYearStudy = student.getYearStudy();
+        if (sNewYearStudy != "") {
+            newYearStudy = Integer.parseInt(sNewYearStudy);
+        }
+        System.out.print("Введите номер зачетной книжки: ");
+        String sNewNumberRecordBook = keyboard.nextLine();
+        int newNumberRecordBook = student.getNumberRecordBook();
+        if (sNewNumberRecordBook != "") {
+            newNumberRecordBook = Integer.parseInt(sNewNumberRecordBook);
         }
 
-        Student newStudent = new Student(id, newTitle);
+        Student newStudent = new Student(id, newFio, newYearBirth, newMonthBirth, newDayBirth, newYearStudy, newNumberRecordBook);
         studentService.update(newStudent);
 
         System.out.println("Студент обновлен");

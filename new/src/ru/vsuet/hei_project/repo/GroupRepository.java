@@ -42,7 +42,12 @@ public class GroupRepository implements IRepository<Group> {
                 while (resultSet1.next()) {
                     long sId = resultSet1.getLong("s.id");
                     String sFio = resultSet1.getString("s.fio");
-                    students.add(new Student(sId, sFio));
+                    Integer sYearBirth = resultSet1.getInt("s.yearBirth");
+                    Integer sMonthBirth = resultSet1.getInt("s.monthBirth");
+                    Integer sDayBirth = resultSet1.getInt("s.dayBirth");
+                    Integer sYearStudy = resultSet1.getInt("s.yearStudy");
+                    Integer sNumberRecordBook = resultSet1.getInt("s.numberRecordBook");
+                    students.add(new Student(sId, sFio, sYearBirth, sMonthBirth, sDayBirth, sYearStudy, sNumberRecordBook));
                 }
 
                 list.add(new Group(id, title, students));
@@ -65,7 +70,12 @@ public class GroupRepository implements IRepository<Group> {
             while (resultSet.next()) {
                 long sId = resultSet.getLong("s.id");
                 String sTitle = resultSet.getString("s.fio");
-                students.add(new Student(sId, sTitle));
+                Integer sYearBirth = resultSet.getInt("s.yearBirth");
+                Integer sMonthBirth = resultSet.getInt("s.monthBirth");
+                Integer sDayBirth = resultSet.getInt("s.dayBirth");
+                Integer sYearStudy = resultSet.getInt("s.yearStudy");
+                Integer sNumberRecordBook = resultSet.getInt("s.numberRecordBook");
+                students.add(new Student(sId, sTitle, sYearBirth, sMonthBirth, sDayBirth, sYearStudy, sNumberRecordBook));
             }
 
             statement1.setLong(1, id);

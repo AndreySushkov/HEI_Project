@@ -3,30 +3,24 @@ package ru.vsuet.hei_project.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Teacher{
+public class Teacher extends Person{
     private Long id;
-    private String fio;
-    private int yearOfBirth;
 
     private List<Course> courses;
 
-    public Teacher(Long id, String fio) {
+    public Teacher(Long id, String fio, int yearBirth, int monthBirth, int dayBirth) {
+        super(fio, yearBirth, monthBirth, dayBirth);
         this.id = id;
-        this.fio = fio;
         this.courses = new ArrayList<>();
     }
 
-    public Teacher(Long id, String fio, List<Course> courses) {
-        this(id, fio);
+    public Teacher(Long id, String fio, int yearBirth, int monthBirth, int dayBirth, List<Course> courses) {
+        this(id, fio, yearBirth, monthBirth, dayBirth);
         this.courses = courses;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public String getFio() {
-        return fio;
     }
 
     public List<Course> getCourses() {
@@ -37,8 +31,8 @@ public class Teacher{
     public String toString() {
         return "Teacher{" +
                 "id=" + id +
-                ", fio='" + fio + '\'' +
-                ", yearOfBirth=" + yearOfBirth +
+                ", fio='" + getFio() + '\'' +
+                ", dateBirth=" + getDayBirth() + "." + getMonthBirth() + "." + getYearBirth() +
                 ", courses=" + courses +
                 '}';
     }

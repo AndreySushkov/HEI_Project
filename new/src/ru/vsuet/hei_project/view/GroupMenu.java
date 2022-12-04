@@ -125,7 +125,7 @@ public class GroupMenu {
         oldStudents.add(oldStudent);
 
         Group newGroup = new Group(gId, oldGroup.getTitle(), oldStudents);
-        Student newStudent = new Student(sId, oldStudent.getFio(), gId);
+        Student newStudent = new Student(sId, oldStudent.getFio(), oldStudent.getYearBirth(), oldStudent.getMonthBirth(), oldStudent.getDayBirth(), oldStudent.getYearStudy(), oldStudent.getNumberRecordBook(), gId);
 
         groupService.update(newGroup);
         studentService.update(newStudent);
@@ -148,7 +148,7 @@ public class GroupMenu {
         oldStudents.remove(oldStudent);
 
         Group newGroup = new Group(oldGroup.getId(), oldGroup.getTitle(), oldStudents);
-        Student newStudent = new Student(sId, oldStudent.getFio(), null);
+        Student newStudent = new Student(sId, oldStudent.getFio(), oldStudent.getYearBirth(), oldStudent.getMonthBirth(), oldStudent.getDayBirth(), oldStudent.getYearStudy(), oldStudent.getNumberRecordBook(), null);
 
         groupService.update(newGroup);
         studentService.update(newStudent);

@@ -75,7 +75,13 @@ public class TeacherMenu {
         System.out.print("Введите ФИО: ");
         keyboard.nextLine();                           //нужно, чтобы не скипалась следующая строчка
         String fio = keyboard.nextLine();
-        Teacher teacher = new Teacher(0L, fio);     //id не важен
+        System.out.print("Введите год рождения: ");
+        int yearBirth = keyboard.nextInt();
+        System.out.print("Введите месяц рождения: ");
+        int monthBirth = keyboard.nextInt();
+        System.out.print("Введите день рождения: ");
+        int dayBirth = keyboard.nextInt();
+        Teacher teacher = new Teacher(0L, fio, yearBirth, monthBirth, dayBirth);     //id не важен
         teacherService.save(teacher);
 
         System.out.println("Преподаватель записан");
@@ -98,14 +104,34 @@ public class TeacherMenu {
         Long id = keyboard.nextLong();
         Teacher teacher = teacherService.getById(id);
 
+        System.out.println("Оставьте поле пустым если не хотите его менять");
+
         System.out.print("Введите ФИО: ");
         keyboard.nextLine();
-        String newFio = keyboard.nextLine();
-        if (newFio == "") {
-            newFio = teacher.getFio();
+        String sNewFio = keyboard.nextLine();
+        if (sNewFio == "") {
+            sNewFio = teacher.getFio();
+        }
+        System.out.print("Введите год рождения: ");
+        String sNewYearBirth = keyboard.nextLine();
+        int newYearBirth = teacher.getYearBirth();
+        if (sNewYearBirth != "") {
+            newYearBirth = Integer.parseInt(sNewYearBirth);
+        }
+        System.out.print("Введите месяц рождения: ");
+        String sNewMonthBirth = keyboard.nextLine();
+        int newMonthBirth = teacher.getMonthBirth();
+        if (sNewMonthBirth != "") {
+            newMonthBirth = Integer.parseInt(sNewMonthBirth);
+        }
+        System.out.print("Введите день рождения: ");
+        String sNewDayBirth = keyboard.nextLine();
+        int newDayBirth = teacher.getDayBirth();
+        if (sNewDayBirth != "") {
+            newDayBirth = Integer.parseInt(sNewDayBirth);
         }
 
-        Teacher newTeacher = new Teacher(id, newFio);
+        Teacher newTeacher = new Teacher(id, sNewFio, newYearBirth, newMonthBirth, newDayBirth);
         teacherService.update(newTeacher);
 
         System.out.println("Преподаватель обновлен");
@@ -125,7 +151,7 @@ public class TeacherMenu {
         List<Course> oldCourses = oldTeacher.getCourses();
         oldCourses.add(oldCourse);
 
-        Teacher newTeacher = new Teacher(tId, oldTeacher.getFio(), oldCourses);
+        Teacher newTeacher = new Teacher(tId, oldTeacher.getFio(), oldTeacher.getYearBirth(), oldTeacher.getMonthBirth(), oldTeacher.getDayBirth(), oldCourses);
         Course newCourse = new Course(cId, oldCourse.getTitle(), tId);
 
         teacherService.update(newTeacher);
@@ -148,7 +174,7 @@ public class TeacherMenu {
         List<Course> oldCourses = oldTeacher.getCourses();
         oldCourses.remove(oldCourse);
 
-        Teacher newTeacher = new Teacher(oldTeacher.getId(), oldTeacher.getFio(), oldCourses);
+        Teacher newTeacher = new Teacher(oldTeacher.getId(), oldTeacher.getFio(), oldTeacher.getYearBirth(), oldTeacher.getMonthBirth(), oldTeacher.getDayBirth(), oldCourses);
         Course newCourse = new Course(cId, oldCourse.getTitle(), null);
 
         teacherService.update(newTeacher);

@@ -12,7 +12,6 @@ public class Storage {
 
     private Storage() {
         this.teachers = new ArrayList<>();
-        init();
     }
 
     public static Storage getInstance() {
@@ -20,13 +19,5 @@ public class Storage {
             instance = new Storage();
         }
         return instance;
-    }
-
-    public void init() {
-        Teacher teacher1 = new Teacher(1L, "Петрова");
-        Teacher teacher2 = new Teacher(2L, "Иванов");
-
-        teachers.add(teacher1);
-        teachers.add(teacher2);
     }
 }
