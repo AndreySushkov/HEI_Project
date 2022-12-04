@@ -1,40 +1,41 @@
 package ru.vsuet.hei_project.service;
 
-import ru.vsuet.hei_project.domain.Teacher;
+import ru.vsuet.hei_project.domain.Course;
+import ru.vsuet.hei_project.domain.Student;
 import ru.vsuet.hei_project.repo.IRepository;
 
 import java.util.List;
 
-public class TeacherService implements IService<Teacher> {
-    private final IRepository<Teacher> repository;
+public class StudentService implements IService<Student>{
+    private IRepository<Student> repository;
 
-    public TeacherService(IRepository<Teacher> repository) {
+    public StudentService(IRepository<Student> repository) {
         this.repository = repository;
     }
 
     @Override
-    public Teacher getById(Long id) {
+    public Student getById(Long id) {
         return repository.find(id);
     }
 
     @Override
-    public List<Teacher> getAll() {
+    public List<Student> getAll() {
         return repository.list();
     }
 
     @Override
-    public void save(Teacher source) {
+    public void save(Student source) {
         repository.save(source);
     }
 
     @Override
-    public void update(Teacher source) {
+    public void update(Student source) {
         repository.update(source);
     }
 
     @Override
     public void removeById(Long id) {
-        Teacher target = getById(id);
+        Student target = getById(id);
         repository.remove(target);
     }
 }

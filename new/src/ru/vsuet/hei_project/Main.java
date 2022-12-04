@@ -1,14 +1,11 @@
 package ru.vsuet.hei_project;
 
 import ru.vsuet.hei_project.domain.Course;
+import ru.vsuet.hei_project.domain.Group;
+import ru.vsuet.hei_project.domain.Student;
 import ru.vsuet.hei_project.domain.Teacher;
-import ru.vsuet.hei_project.repo.CourseRepository;
-import ru.vsuet.hei_project.repo.DataBaseConnector;
-import ru.vsuet.hei_project.repo.IRepository;
-import ru.vsuet.hei_project.repo.TeacherRepository;
-import ru.vsuet.hei_project.service.CourseService;
-import ru.vsuet.hei_project.service.IService;
-import ru.vsuet.hei_project.service.TeacherService;
+import ru.vsuet.hei_project.repo.*;
+import ru.vsuet.hei_project.service.*;
 import ru.vsuet.hei_project.view.Menu;
 
 public class Main {
@@ -21,7 +18,13 @@ public class Main {
         IRepository<Course> courseRepository = new CourseRepository(connector);
         IService<Course> courseService = new CourseService(courseRepository);
 
-        Menu menu = new Menu(teacherService, courseService);
+        IRepository<Student> studentRepository = new StudentRepository(connector);
+        IService<Student> studentService = new StudentService(studentRepository);
+
+        IRepository<Group> groupRepository = new GroupRepository(connector);
+        IService<Group> groupService = new GroupService(groupRepository);
+
+        Menu menu = new Menu(teacherService, courseService, studentService, groupService);
         while (true) {
             menu.draw();
         }

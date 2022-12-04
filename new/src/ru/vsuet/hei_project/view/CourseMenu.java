@@ -53,7 +53,7 @@ public class CourseMenu {
 
     private void printSingleCourse() {
         System.out.println("---- КУРС ----");
-        System.out.print("Enter id: ");
+        System.out.print("Введите id: ");
         Long id = keyboard.nextLong();
         Course course = courseService.getById(id);
 
@@ -63,7 +63,7 @@ public class CourseMenu {
 
     private void saveCourse() {
         System.out.println("---- СОХРАНЕНИЕ КУРСА ----");
-        System.out.print("Enter title: ");
+        System.out.print("Введите наименование: ");
         keyboard.nextLine();                           //нужно, чтобы не скипалась следующая строчка
         String title = keyboard.nextLine();
         Course course = new Course(0L, title);     //id не важен
@@ -75,7 +75,7 @@ public class CourseMenu {
 
     private void removeCourse() {
         System.out.println("---- УДАЛЕНИЕ КУРСА ----");
-        System.out.print("Enter id: ");
+        System.out.print("Введите id: ");
         Long id = keyboard.nextLong();
         courseService.removeById(id);
 
@@ -85,11 +85,11 @@ public class CourseMenu {
 
     private void updateCourse() {
         System.out.println("---- ОБНОВЛЕНИЕ КУРСА (В СВЕТЛОЕ БУДУЩЕЕ) ----");
-        System.out.print("Enter id: ");
+        System.out.print("Введите id: ");
         Long id = keyboard.nextLong();
         Course course = courseService.getById(id);
 
-        System.out.print("Enter title");
+        System.out.print("Введите наименование: ");
         keyboard.nextLine();
         String newTitle = keyboard.nextLine();
         if (newTitle == "") {
@@ -99,7 +99,7 @@ public class CourseMenu {
         Course newCourse = new Course(id, newTitle);
         courseService.update(newCourse);
 
-        System.out.println("Object is updated");
+        System.out.println("Курс обновлен");
         System.out.println();
     }
 }

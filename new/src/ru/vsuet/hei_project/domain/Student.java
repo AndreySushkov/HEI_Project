@@ -1,24 +1,19 @@
 package ru.vsuet.hei_project.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Teacher{
+public class Student {
     private Long id;
     private String fio;
     private int yearOfBirth;
+    private Long group_id;
 
-    private List<Course> courses;
-
-    public Teacher(Long id, String fio) {
+    public Student(Long id, String fio) {
         this.id = id;
         this.fio = fio;
-        this.courses = new ArrayList<>();
     }
 
-    public Teacher(Long id, String fio, List<Course> courses) {
+    public Student(Long id, String fio, Long group_id) {
         this(id, fio);
-        this.courses = courses;
+        this.group_id = group_id;
     }
 
     public Long getId() {
@@ -29,17 +24,16 @@ public class Teacher{
         return fio;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public Long getGroup_id() {
+        return group_id;
     }
 
     @Override
     public String toString() {
-        return "Teacher{" +
+        return "Student{" +
                 "id=" + id +
                 ", fio='" + fio + '\'' +
                 ", yearOfBirth=" + yearOfBirth +
-                ", courses=" + courses +
                 '}';
     }
 }

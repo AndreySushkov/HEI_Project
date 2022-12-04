@@ -4,7 +4,7 @@ import ru.vsuet.hei_project.domain.Course;
 import ru.vsuet.hei_project.domain.Teacher;
 import ru.vsuet.hei_project.service.IService;
 
-import java.util.ArrayList;
+import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,7 +45,7 @@ public class TeacherMenu {
             case 4 -> removeTeacher();
             case 5 -> updateTeacher();
             case 6 -> addCourseToTeacher();
-            case 7 -> removeCourseToTeacher();
+            case 7 -> removeCourseFromTeacher();
             case 0 -> {
                 return false;
             }
@@ -62,7 +62,7 @@ public class TeacherMenu {
 
     private void printSingleTeacher() {
         System.out.println("---- ПРЕПОДАВАТЕЛЬ ----");
-        System.out.print("Enter id: ");
+        System.out.print("Введите id: ");
         Long id = keyboard.nextLong();
         Teacher teacher = teacherService.getById(id);
 
@@ -72,33 +72,33 @@ public class TeacherMenu {
 
     private void saveTeacher() {
         System.out.println("---- СОХРАНЕНИЕ ПРЕПОДАВАТЕЛЯ ----");
-        System.out.print("Enter fio: ");
+        System.out.print("Введите ФИО: ");
         keyboard.nextLine();                           //нужно, чтобы не скипалась следующая строчка
         String fio = keyboard.nextLine();
         Teacher teacher = new Teacher(0L, fio);     //id не важен
         teacherService.save(teacher);
 
-        System.out.println("Object is recorded");
+        System.out.println("Преподаватель записан");
         System.out.println();
     }
 
     private void removeTeacher() {
         System.out.println("---- УДАЛЕНИЕ ПРЕПОДАВАТЕЛЯ ----");
-        System.out.print("Enter id: ");
+        System.out.print("Введите id: ");
         Long id = keyboard.nextLong();
         teacherService.removeById(id);
 
-        System.out.println("Object is removed");
+        System.out.println("Преподаватель удален");
         System.out.println();
     }
 
     private void updateTeacher() {
         System.out.println("---- ОБНОВЛЕНИЕ ПРЕПОДАВАТЕЛЯ ----");
-        System.out.print("Enter id: ");
+        System.out.print("Введите id: ");
         Long id = keyboard.nextLong();
         Teacher teacher = teacherService.getById(id);
 
-        System.out.print("Enter fio: ");
+        System.out.print("Введите ФИО: ");
         keyboard.nextLine();
         String newFio = keyboard.nextLine();
         if (newFio == "") {
@@ -108,15 +108,15 @@ public class TeacherMenu {
         Teacher newTeacher = new Teacher(id, newFio);
         teacherService.update(newTeacher);
 
-        System.out.println("Object is updated");
+        System.out.println("Преподаватель обновлен");
         System.out.println();
     }
 
     private void addCourseToTeacher() {
         System.out.println("---- ДОБАВЛЕНИЕ КУРСА ПРЕПОДАВАТЕЛЮ ----");
-        System.out.print("Enter id of teacher: ");
+        System.out.print("Введите id переподавателя: ");
         long tId = keyboard.nextLong();
-        System.out.print("Enter id of course: ");
+        System.out.print("Введите id курса: ");
         long cId = keyboard.nextLong();
 
         Teacher oldTeacher = teacherService.getById(tId);
@@ -131,14 +131,15 @@ public class TeacherMenu {
         teacherService.update(newTeacher);
         courseService.update(newCourse);
 
+        System.out.println("Курс преподавателю был добавлен");
         System.out.println();
     }
 
-    private void removeCourseToTeacher() {
+    private void removeCourseFromTeacher() {
         System.out.println("---- УДАЛЕНИЕ КУРСА У ПРЕПОДАВАТЕЛЯ ----");
-        System.out.print("Enter id of teacher: ");
+        System.out.print("Введите id преподавателя: ");
         long tId = keyboard.nextLong();
-        System.out.print("Enter id of course: ");
+        System.out.print("Введите id курса: ");
         long cId = keyboard.nextLong();
 
         Teacher oldTeacher = teacherService.getById(tId);
@@ -153,6 +154,7 @@ public class TeacherMenu {
         teacherService.update(newTeacher);
         courseService.update(newCourse);
 
+        System.out.println("Курс у преподавателя был удален");
         System.out.println();
     }
 }
