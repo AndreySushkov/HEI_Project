@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="195.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vsuet.hey_project_with_javafx.MainMenuController">
+   <children>
+      <Button fx:id="teachersButton" layoutX="25.0" layoutY="39.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="132.0" text="Преподаватели" />
+      <Button fx:id="coursesButton" layoutX="183.0" layoutY="39.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="132.0" text="Курсы" />
+      <Button fx:id="studentsButton" layoutX="25.0" layoutY="107.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="132.0" text="Студенты" />
+      <Button fx:id="groupsButton" layoutX="183.0" layoutY="107.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="132.0" text="Группы" />
+   </children>
+</Pane>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vsuet.hey_project_with_javafx.controllers.TeacherMenu.UpdateTeacherCoursesMenuController">
+   <children>
+      <TableView fx:id="courseTable" layoutX="14.0" layoutY="39.0" prefHeight="375.0" prefWidth="343.0">
+        <columns>
+          <TableColumn fx:id="courseIdTableColumn" prefWidth="52.80002021789551" text="id" />
+          <TableColumn fx:id="courseTitleTableColumn" prefWidth="205.59996795654297" text="Курс" />
+            <TableColumn fx:id="courseNumberHoursTableColumn" prefWidth="83.800048828125" text="Кол-во часов" />
+        </columns>
+      </TableView>
+      <TableView fx:id="availableCourseTable" layoutX="360.0" layoutY="39.0" prefHeight="375.0" prefWidth="343.0">
+         <columns>
+            <TableColumn fx:id="availableCourseIdTableColumn" prefWidth="56.79998779296875" text="id" />
+            <TableColumn fx:id="availableCourseTitleTableColumn" prefWidth="198.39999389648438" text="Курс" />
+            <TableColumn fx:id="availableCourseNumberHoursTableColumn" prefWidth="88.0" text="Кол-во часов" />
+         </columns>
+      </TableView>
+      <Button fx:id="removeCourseButton" layoutX="14.0" layoutY="424.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="170.0" text="Удалить курс" />
+      <Button fx:id="addCourseButton" layoutX="360.0" layoutY="424.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="170.0" text="Добавить курс" />
+      <Button fx:id="applyButton" layoutX="360.0" layoutY="468.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="343.0" text="Принять изменения" />
+      <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Текущие курсы" wrappingWidth="227.73672485351562">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="360.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Доступные курсы" wrappingWidth="227.73672485351562">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>

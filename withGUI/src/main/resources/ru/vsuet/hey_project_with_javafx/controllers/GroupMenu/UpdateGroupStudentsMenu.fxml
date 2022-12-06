@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vsuet.hey_project_with_javafx.controllers.GroupMenu.UpdateGroupStudentsMenuController">
+   <children>
+      <TableView fx:id="studentTable" layoutX="14.0" layoutY="39.0" prefHeight="375.0" prefWidth="343.0">
+        <columns>
+          <TableColumn fx:id="studentIdTableColumn" prefWidth="52.80002021789551" text="id" />
+          <TableColumn fx:id="studentFioTableColumn" prefWidth="155.19994354248047" text="ФИО" />
+            <TableColumn fx:id="studentDayBirthTableColumn" prefWidth="38.39996337890625" text="День" />
+            <TableColumn fx:id="studentMonthBirthTableColumn" prefWidth="44.0" text="Месяц" />
+            <TableColumn fx:id="studentYearBirthTableColumn" minWidth="0.0" prefWidth="51.000030517578125" text="Год" />
+        </columns>
+      </TableView>
+      <Button fx:id="removeStudentButton" layoutX="14.0" layoutY="424.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="170.0" text="Удалить студента" />
+      <Button fx:id="addStudentButton" layoutX="360.0" layoutY="424.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="170.0" text="Добавить студента" />
+      <Button fx:id="applyButton" layoutX="360.0" layoutY="468.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="343.0" text="Принять изменения" />
+      <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Текущие студенты" wrappingWidth="227.73672485351562">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="360.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Доступные студенты" wrappingWidth="227.73672485351562">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <TableView fx:id="availableStudentTable" layoutX="360.0" layoutY="39.0" prefHeight="375.0" prefWidth="343.0">
+         <columns>
+            <TableColumn fx:id="availableStudentIdTableColumn1" prefWidth="52.80002021789551" text="id" />
+            <TableColumn fx:id="availableStudentFioTableColumn1" prefWidth="155.19994354248047" text="ФИО" />
+            <TableColumn fx:id="availableStudentDayBirthTableColumn" prefWidth="38.39996337890625" text="День" />
+            <TableColumn fx:id="availableStudentMonthBirthTableColumn" prefWidth="44.0" text="Месяц" />
+            <TableColumn fx:id="availableStudentYearBirthTableColumn" minWidth="0.0" prefWidth="53.60003662109375" text="Год" />
+         </columns>
+      </TableView>
+   </children>
+</Pane>
