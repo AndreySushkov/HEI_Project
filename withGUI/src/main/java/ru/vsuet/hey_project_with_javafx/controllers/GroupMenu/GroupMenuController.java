@@ -12,8 +12,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import ru.vsuet.hey_project_with_javafx.controllers.TeacherMenu.AddTeacherMenuController;
+import ru.vsuet.hey_project_with_javafx.domain.Course;
 import ru.vsuet.hey_project_with_javafx.domain.Group;
 import ru.vsuet.hey_project_with_javafx.domain.Student;
+import ru.vsuet.hey_project_with_javafx.domain.Teacher;
 import ru.vsuet.hey_project_with_javafx.service.IService;
 
 import java.io.IOException;
@@ -100,6 +102,63 @@ public class GroupMenuController {
 
             AddGroupMenuController addGroupMenuController = loader.getController();
             addGroupMenuController.transferParameters(groupService);
+
+            Parent root = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        });
+
+        removeGroupButton.setOnAction(actionEvent -> {
+            Group selectedGroup = groupTable.getSelectionModel().getSelectedItem();
+            Long groupId = selectedGroup.getId();
+
+            for(Student student : studentService.getAll()) {
+                if (groupId == student.getGroup_id()) {
+                    Student newStudent = new Student(student.getId(), student.getFio(), student.getYearBirth(), student.getMonthBirth(), student.getDayBirth(), student.getYearStudy(), student.getNumberRecordBook(), null);
+                    studentService.update(newStudent);
+                }
+            }
+
+            groups.remove(selectedGroup);
+            groupService.removeById(selectedGroup.getId());
+
+            updateGroupTable();
+        });
+
+        updateGroupButton.setOnAction(actionEvent -> {
+            Group selectedGroup = groupTable.getSelectionModel().getSelectedItem();
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("UpdateGroupMenu.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            UpdateGroupMenuController updateGroupMenuController = loader.getController();
+            updateGroupMenuController.transferParameters(groupService, selectedGroup);
+
+            Parent root = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        });
+
+        updateStudentsButton.setOnAction(actionEvent -> {
+            Group selectedGroup = groupTable.getSelectionModel().getSelectedItem();
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("UpdateGroupStudentsMenu.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            UpdateGroupStudentsMenuController updateGroupStudentsMenuController = loader.getController();
+            updateGroupStudentsMenuController.transferParameters(studentService, selectedGroup);
 
             Parent root = loader.getRoot();
             Stage stage = new Stage();
