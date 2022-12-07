@@ -1,6 +1,9 @@
 package ru.vsuet.hey_project_with_javafx.controllers.TeacherMenu;
 
 import java.io.IOException;
+
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -177,6 +180,13 @@ public class TeacherMenuController {
 
     private void start() {
         teachers = FXCollections.observableArrayList(teacherService.getAll());
+
+        teachers.addListener(new ListChangeListener<Teacher>() {
+            @Override
+            public void onChanged(Change<? extends Teacher> change) {
+                updateTeacherTable();
+            }
+        });
 
         updateTeacherTable();
     }
