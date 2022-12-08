@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ru/vsuet/hey_project_with_javafx/domain" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ru/vsuet/hey_project_with_javafx/repo" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ru/vsuet/hey_project_with_javafx/service" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/CourseMenu/AddCourseMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/CourseMenu/CourseMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/CourseMenu/UpdateCourseMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/GroupMenu/AddGroupMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/GroupMenu/GroupMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/GroupMenu/UpdateGroupMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/GroupMenu/UpdateGroupStudentsMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/MainMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/MainMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/StudentMenu/AddStudentMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/StudentMenu/StudentMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/StudentMenu/UpdateStudentMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/TeacherMenu/AddStudentMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/TeacherMenu/AddTeacherMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/TeacherMenu/StudentMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/TeacherMenu/TeacherMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/TeacherMenu/UpdateStudentMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/TeacherMenu/UpdateTeacherCoursesMenu.fxml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/ru/vsuet/hey_project_with_javafx/controllers/TeacherMenu/UpdateTeacherMenu.fxml" charset="windows-1251" />
+  </component>
+</project>
