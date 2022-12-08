@@ -80,6 +80,8 @@ public class StudentMenuController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            addStudentButton.getScene().getWindow().hide();
         });
 
         updateStudentButton.setOnAction(actionEvent -> {
@@ -99,6 +101,8 @@ public class StudentMenuController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            updateStudentButton.getScene().getWindow().hide();
         });
 
         removeStudentButton.setOnAction(actionEvent -> {

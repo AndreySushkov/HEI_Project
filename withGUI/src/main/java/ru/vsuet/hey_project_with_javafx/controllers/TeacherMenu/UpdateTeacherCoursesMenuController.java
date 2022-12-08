@@ -1,18 +1,24 @@
 package ru.vsuet.hey_project_with_javafx.controllers.TeacherMenu;
 
+import java.io.IOException;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import ru.vsuet.hey_project_with_javafx.domain.Course;
 import ru.vsuet.hey_project_with_javafx.domain.Teacher;
 import ru.vsuet.hey_project_with_javafx.service.IService;
 
 public class UpdateTeacherCoursesMenuController {
+    private IService<Teacher> teacherService;
     private IService<Course> courseService;
 
     private Teacher teacher;
@@ -93,12 +99,29 @@ public class UpdateTeacherCoursesMenuController {
                 }
             }
 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("TeacherMenu.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TeacherMenuController teacherMenuController = loader.getController();
+            teacherMenuController.transferParameters(teacherService, courseService);
+
+            Parent root = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
             applyButton.getScene().getWindow().hide();
         });
     }
 
-    public void transferParameters(IService<Course> courseService, Teacher teacher) {
+    public void transferParameters(IService<Course> courseService, IService<Teacher> teacherService, Teacher teacher) {
         this.courseService = courseService;
+        this.teacherService = teacherService;
 
         this.teacher = teacher;
 

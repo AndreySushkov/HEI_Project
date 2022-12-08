@@ -64,6 +64,8 @@ public class CourseMenuController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            addCourseButton.getScene().getWindow().hide();
         });
 
         updateCourseButton.setOnAction(actionEvent -> {
@@ -84,6 +86,8 @@ public class CourseMenuController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            updateCourseButton.getScene().getWindow().hide();
         });
 
         removeCourseButton.setOnAction(actionEvent -> {

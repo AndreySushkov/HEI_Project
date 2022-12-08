@@ -101,12 +101,14 @@ public class GroupMenuController {
             }
 
             AddGroupMenuController addGroupMenuController = loader.getController();
-            addGroupMenuController.transferParameters(groupService);
+            addGroupMenuController.transferParameters(groupService, studentService);
 
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            addGroupButton.getScene().getWindow().hide();
         });
 
         removeGroupButton.setOnAction(actionEvent -> {
@@ -138,12 +140,14 @@ public class GroupMenuController {
             }
 
             UpdateGroupMenuController updateGroupMenuController = loader.getController();
-            updateGroupMenuController.transferParameters(groupService, selectedGroup);
+            updateGroupMenuController.transferParameters(studentService, groupService, selectedGroup);
 
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            updateGroupButton.getScene().getWindow().hide();
         });
 
         updateStudentsButton.setOnAction(actionEvent -> {
@@ -158,12 +162,14 @@ public class GroupMenuController {
             }
 
             UpdateGroupStudentsMenuController updateGroupStudentsMenuController = loader.getController();
-            updateGroupStudentsMenuController.transferParameters(studentService, selectedGroup);
+            updateGroupStudentsMenuController.transferParameters(groupService, studentService, selectedGroup);
 
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            updateStudentsButton.getScene().getWindow().hide();
         });
     }
 

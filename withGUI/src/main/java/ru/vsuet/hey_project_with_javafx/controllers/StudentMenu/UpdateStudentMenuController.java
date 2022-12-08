@@ -1,12 +1,17 @@
 package ru.vsuet.hey_project_with_javafx.controllers.StudentMenu;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import ru.vsuet.hey_project_with_javafx.domain.Student;
 import ru.vsuet.hey_project_with_javafx.service.IService;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class UpdateStudentMenuController {
@@ -42,6 +47,21 @@ public class UpdateStudentMenuController {
 
             Student newStudent = new Student(student.getId(), fio, yearBirth, monthBirth, dayBirth, yearStudy, numberRecordBook);
             studentService.update(newStudent);
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("StudentMenu.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            StudentMenuController studentMenuController = loader.getController();
+            studentMenuController.transferParameters(studentService);
+
+            Parent root = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
 
             applyButton.getScene().getWindow().hide();
         });

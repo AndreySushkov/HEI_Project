@@ -105,12 +105,14 @@ public class TeacherMenuController {
             }
 
             AddTeacherMenuController addTeacherMenuController = loader.getController();
-            addTeacherMenuController.transferParameters(teacherService);
+            addTeacherMenuController.transferParameters(teacherService, courseService);
 
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            addTeacherButton.getScene().getWindow().hide();
         });
 
         removeTeacherButton.setOnAction(actionEvent -> {
@@ -142,12 +144,14 @@ public class TeacherMenuController {
             }
 
             UpdateTeacherMenuController updateTeacherMenuController = loader.getController();
-            updateTeacherMenuController.transferParameters(teacherService, selectedTeacher);
+            updateTeacherMenuController.transferParameters(teacherService, courseService, selectedTeacher);
 
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            updateTeacherButton.getScene().getWindow().hide();
         });
 
         updateCoursesButton.setOnAction(actionEvent -> {
@@ -162,12 +166,14 @@ public class TeacherMenuController {
             }
 
             UpdateTeacherCoursesMenuController updateTeacherCoursesMenuController = loader.getController();
-            updateTeacherCoursesMenuController.transferParameters(courseService, selectedTeacher);
+            updateTeacherCoursesMenuController.transferParameters(courseService, teacherService, selectedTeacher);
 
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
+            updateCoursesButton.getScene().getWindow().hide();
         });
     }
 
